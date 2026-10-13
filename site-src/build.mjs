@@ -70,10 +70,10 @@ const ICONS = {
   resources: '<circle cx="12" cy="5.5" r="2"/><circle cx="5.5" cy="17" r="2"/><circle cx="18.5" cy="17" r="2"/><path d="M11 7.3 6.6 15.2M13 7.3l4.4 7.9M7.5 17h9"/>',
   company: '<path d="M6 4h12v16H6z"/><path d="m12 8 1.2 2.5 2.8.4-2 1.9.5 2.7-2.5-1.3-2.5 1.3.5-2.7-2-1.9 2.8-.4z"/>',
   contact: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>',
-  portal: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
-  home: '<path d="M4 11 12 4l8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/>'
+  portal: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>'
 };
-const RAIL = [['sustainability', 'Sustain&shy;ability'], ['products', 'Products &amp; Services'], ['resources', 'Insights &amp; Resources'], ['company', 'Company']];
+const EGG = '<svg viewBox="-2 -1 24 28" aria-hidden="true"><use href="#egg" fill="currentColor"/></svg>';
+const RAIL = [['products', 'Products &amp; Services'], ['sustainability', 'Sustain&shy;ability'],['resources', 'Insights &amp; Resources'], ['company', 'Company']];
 const CHEV = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>';
 const MARK = (cls = '') => `<img class="mark ${cls}" src="img/logo/${cls === 'mark--light' ? 'ecoshell-logo-white' : 'ecoshell-logo'}.png" alt="Ecoshell" width="442" height="125">`;
 const lnk = (x, cls = '') => `<a${cls ? ` class="${cls}"` : ''} data-go="${x[1]}"${x[2] ? ` data-anchor="${x[2]}"` : ''}>${x[0]}</a>`;
@@ -118,9 +118,12 @@ const FOOTER = `<footer class="ftr"><div class="wrap">
 
 function shell(cur, body, {shellId = ''} = {}) {
   const sec = P[cur].sec;
-  return `<div class="site"${shellId ? ` id="${shellId}"` : ''}><a class="skip" href="#content">Skip to content</a><div class="shell">
+  return `<div class="site"${shellId ? ` id="${shellId}"` : ''}><a class="skip" href="#content">Skip to content</a>
+<header class="topbar"><div class="wrap"><button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10201A" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a data-go="home" aria-label="Ecoshell home" style="text-decoration:none">${MARK()}</a><span class="topbar__tag">Bio-calcium from eggshells</span></div></header>
+<div class="mobile-menu" id="mmenu" hidden><div class="wrap">${phoneMenu()}</div></div>
+<div class="shell">
 <aside class="lrail" aria-label="Main menu"><div class="lrail__in">
-<a class="rbtn" data-go="home"${cur === 'home' ? ' aria-current="page"' : ''}>${ic(ICONS.home)}<span>Home</span></a>
+<a class="rbtn" data-go="home"${cur === 'home' ? ' aria-current="page"' : ''}>${EGG}<span>Home</span></a>
 ${RAIL.map(([k, label]) => `<button type="button" class="rbtn" data-panel="${k}" aria-expanded="false"${sec === k ? ' aria-current="page"' : ''}>${ic(ICONS[k])}<span>${label}</span></button>`).join('\n')}
 <div class="lrail__sep" role="presentation"></div>
 <a class="rbtn" data-go="contact"${sec === 'contact' ? ' aria-current="page"' : ''}>${ic(ICONS.contact)}<span>Contact Us</span></a>
@@ -128,8 +131,6 @@ ${RAIL.map(([k, label]) => `<button type="button" class="rbtn" data-panel="${k}"
 <div class="panel" id="panel" hidden><div class="panel__head">${MARK('mark--ghost')}<button type="button" class="panel__x" id="panelX" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5 5 19"/></svg></button></div><div class="panel__body">${panes()}</div></div>
 </div></aside>
 <div class="main">
-<header class="topbar"><div class="wrap"><button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10201A" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a data-go="home" aria-label="Ecoshell home" style="text-decoration:none">${MARK()}</a></div></header>
-<div class="mobile-menu" id="mmenu" hidden><div class="wrap">${phoneMenu()}</div></div>
 <main id="content">${body}</main>
 ${FOOTER}
 </div>
