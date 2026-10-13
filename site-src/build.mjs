@@ -128,7 +128,7 @@ ${RAIL.map(([k, label]) => `<button type="button" class="rbtn" data-panel="${k}"
 <div class="lrail__sep" role="presentation"></div>
 <a class="rbtn" data-go="contact"${sec === 'contact' ? ' aria-current="page"' : ''}>${ic(ICONS.contact)}<span>Contact Us</span></a>
 <a class="rbtn" data-go="portal"${sec === 'portal' ? ' aria-current="page"' : ''}>${ic(ICONS.portal)}<span>Portal</span></a>
-<div class="panel" id="panel" hidden><div class="panel__head">${MARK('mark--ghost')}<button type="button" class="panel__x" id="panelX" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5 5 19"/></svg></button></div><div class="panel__body">${panes()}</div></div>
+<div class="panel" id="panel" hidden><div class="panel__head"><button type="button" class="panel__x" id="panelX" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5 5 19"/></svg></button></div><div class="panel__body">${panes()}</div></div>
 </div></aside>
 <div class="main">
 <main id="content">${body}</main>
