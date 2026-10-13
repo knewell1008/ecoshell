@@ -67,14 +67,16 @@
       slides.forEach(function(s, k){
         s.hidden = k !== i;
         var v = s.querySelector('video');
-        if(v){ if(k === i){ var p = v.play(); if(p) p.catch(function(){}); } else v.pause(); }
+        if(v){ if(k === i){ v.currentTime = 0; var p = v.play(); if(p) p.catch(function(){}); } else v.pause(); }
       });
       dots.forEach(function(d, k){ d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
     };
+    // Video slides stay up for 10s so the clip plays through; others for 7s.
     var start = function(){
-      clearInterval(timer);
+      clearTimeout(timer);
       if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-        timer = setInterval(function(){ show((current + 1) % slides.length); }, 7000);
+        var delay = slides[current].querySelector('video') ? 10000 : 7000;
+        timer = setTimeout(function(){ show((current + 1) % slides.length); start(); }, delay);
       }
     };
     dots.forEach(function(d){ d.addEventListener('click', function(){ show(+d.dataset.dot); start(); }); });

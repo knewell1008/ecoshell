@@ -176,12 +176,6 @@ function portalBody() {
 <div><button class="btn btn--primary" type="submit">Sign in</button></div>
 <p class="portal-status" id="loginStatus" role="status" aria-live="polite"></p>
 <p style="font-size:14px;color:var(--stone)">First time here? Enter your work email and a password to create your account.</p></form></div>
-<div><span class="eyebrow" style="margin-bottom:12px">What you see after signing in</span><div class="pv"><div class="pv__bar"><span>Your company</span><small>Example</small></div><div class="pv__body">
-<div><h4>Returnable crate pilot</h4><p style="font-size:14px;color:var(--stone);margin-top:4px">Ecoshell Mold · HDPE · Injection moulding</p></div>
-<div class="stages"><span class="on"></span><span class="on"></span><span class="on"></span><span class="now"></span><span></span><span></span></div><div class="stage-labels"><span>Inquiry</span><span>Technical review</span><span>Sample</span><span style="color:var(--deep);font-weight:500">Pilot</span><span>Proposal</span><span>Contract</span></div>
-<dl class="list"><div><dt>Sample</dt><dd>Shipped · 25 kg · batch reference</dd></div><div><dt>Pilot</dt><dd>In progress · results due</dd></div><div><dt>Documents</dt><dd>Data sheets and pilot plan</dd></div></dl>
-<div class="msg"><b>Latest update from Ecoshell</b>Pilot settings confirmed with your line team. We will share mechanical test results once complete.</div>
-</div></div><p style="font-size:13.5px;color:var(--stone);margin-top:10px">Example only. Your real projects appear after you sign in.</p></div>
 </div></section>`;
   return {auth, dashboard: orig};
 }
