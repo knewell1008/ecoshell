@@ -1,7 +1,8 @@
 import {cleanString, json, requireEnv, supabaseFetch} from '../lib/supabase.js';
 import {findOrCreateCompany} from '../lib/companies.js';
+import {sendEmail, enquiryEmail} from '../lib/email.js';
 
-export async function enquiriesCreate({request, env}) {
+export async function enquiriesCreate({request, env, ctx}) {
   const envError = requireEnv(env, ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']);
   if (envError) return json({error: envError}, {status: 500});
 
@@ -86,6 +87,10 @@ export async function enquiriesCreate({request, env}) {
         created_by: 'system'
       })
     });
+
+    // Tell the team by email. Sent after the response, and a failure here never loses the inquiry.
+    const mail = enquiryEmail(enquiry, {reference: project[0].reference_code, adminUrl: new URL('/admin', request.url).href});
+    ctx.waitUntil(sendEmail(env, {to: env.ENQUIRY_EMAIL_TO, ...mail}).catch((error) => console.error('Inquiry email failed:', error.message)));
 
     return json({
       ok: true,

@@ -8,8 +8,13 @@
     "run_worker_first": true
   },
   "vars": {
-    "SUPABASE_URL": "https://bogzsjzqdewbsgglqvpr.supabase.co"
+    "SUPABASE_URL": "https://bogzsjzqdewbsgglqvpr.supabase.co",
+    // Website inquiries are emailed here through Resend (comma-separate several addresses).
+    "ENQUIRY_EMAIL_TO": "kyle@ecoshell.eco",
+    // Resend's test sender until ecoshell.eco is verified in Resend; then e.g. "Ecoshell website <website@ecoshell.eco>".
+    "EMAIL_FROM": "Ecoshell website <onboarding@resend.dev>"
   },
+  // RESEND_API_KEY is a Worker secret, set in the dashboard like SUPABASE_SERVICE_ROLE_KEY.
   // SUPABASE_SERVICE_ROLE_KEY is a Worker secret, set in the dashboard under
   // Settings > Variables and Secrets (or with `wrangler secret put`).
   "keep_vars": true
