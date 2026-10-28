@@ -41,6 +41,7 @@ async function fetchProduct(slug, token, draft) {
 function rewriter(c, draft) {
   const name = str(c.name);
   const summary = str(c.summary);
+  const description = str(c.description) || summary;
   const details = str(c.details).split(/\n\s*\n/).map(str).filter(Boolean);
   const apps = (c.applications || []).filter((a) => str(a.title));
   const props = (c.properties || []).filter((p) => str(p.label));
@@ -62,9 +63,9 @@ function rewriter(c, draft) {
   if (summary) {
     rw = rw
       .on('meta[name="description"]', {element: (el) => el.setAttribute('content', summary)})
-      .on('.phero p.sub', inner(esc(summary)))
-      .on('#desc p.lead', inner(esc(summary)));
+      .on('.phero p.sub', inner(esc(summary)));
   }
+  if (description) rw = rw.on('#desc p.lead', inner(esc(description)));
   if (details.length) {
     rw = rw.on('#desc .prose > p:not(.lead)', {
       element: (el) => el.replace(details.map((p) => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join(''), {html: true})
