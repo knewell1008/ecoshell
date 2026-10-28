@@ -18,7 +18,19 @@ $Root = Split-Path -Parent $PSScriptRoot
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Net.Http
 
-$secure = Read-Host 'Paste your Storyblok Personal access token' -AsSecureString
+# The token can be remembered for next time, encrypted with Windows (DPAPI) so only this Windows user can read it.
+$TokenFile = Join-Path $env:APPDATA 'Ecoshell\storyblok-token.txt'
+if (Test-Path $TokenFile) {
+  $secure = Get-Content $TokenFile | ConvertTo-SecureString
+  Write-Host "Using the saved Storyblok token. Delete $TokenFile to forget it."
+} else {
+  $secure = Read-Host 'Paste your Storyblok Personal access token' -AsSecureString
+  if ((Read-Host 'Remember this token on this PC for next time? (y/n)') -match '^y') {
+    New-Item -ItemType Directory -Force (Split-Path $TokenFile) | Out-Null
+    $secure | ConvertFrom-SecureString | Set-Content $TokenFile
+    Write-Host "Saved, encrypted for your Windows account: $TokenFile"
+  }
+}
 $Token = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure))
 $Headers = @{Authorization = $Token}
 

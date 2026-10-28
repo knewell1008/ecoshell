@@ -193,8 +193,12 @@ R.badges = (b) => section(b, `<div class="wrap">${secHead(b)}<div class="grid g4
 
 R.industries = (b) => section(b, `<div class="wrap">${secHead(b)}<div class="ind">${list(b.items).map((x) => `<div><h3>${fmt(x.term)}</h3><p>${fmt(x.text)}</p></div>`).join('')}</div></div>`);
 
+// Uploaded logos scroll in the strip; the dashed name boxes are placeholders until there are logos.
 R.logos = (b) => {
-  const spans = lines(b.items).map((x) => `<span>${fmt(x)}</span>`).join('');
+  const logos = list(b.logos).filter((a) => a?.filename);
+  const spans = logos.length
+    ? logos.map((a) => `<div class="logo"><img src="${attr(assetUrl(a, 400))}" alt="${attr(a.alt || a.title || a.name)}" loading="lazy"></div>`).join('')
+    : lines(b.items).map((x) => `<span>${fmt(x)}</span>`).join('');
   return `<section class="sec--egg" style="padding-block:56px 64px"${b.anchor ? ` id="${attr(b.anchor)}"` : ''}><div class="wrap"><div class="sec-head" style="margin-bottom:24px"><div><span class="eyebrow">${fmt(b.eyebrow)}</span><h2 style="font-size:clamp(26px,2.6cqi,32px)">${fmt(b.heading)}</h2></div>${str(b.intro) ? `<p style="font-size:14.5px">${fmt(b.intro)}</p>` : ''}</div></div><div class="marquee"><div class="marquee__track">${spans}${spans}</div></div></section>`;
 };
 

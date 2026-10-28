@@ -112,7 +112,8 @@
       "eyebrow": {"type": "text", "max_length": 60},
       "heading": {"type": "text", "max_length": 90},
       "intro": {"type": "textarea"},
-      "items": {"type": "textarea", "description": "One name per line"},
+      "logos": {"type": "multiasset", "filetypes": ["images"], "description": "Client logos, in order. PNG or SVG with a transparent background works best; put the company name in each image's Alt text"},
+      "items": {"type": "textarea", "description": "Placeholder names, one per line. Shown only while no logos are uploaded"},
       "anchor": "@anchor"
     }},
     {"name": "definition_list", "display_name": "List", "is_root": false, "is_nestable": true, "schema": {
