@@ -53,7 +53,8 @@ function rewriter(c, draft) {
     rw = rw
       .on('title', inner(`${esc(shortName(name))} | Ecoshell`))
       .on('.phero h1', inner(esc(name)))
-      .on('.phero .crumbs > span:last-child', inner(esc(shortName(name))))
+      // Crumbs are Home / Products / Platform / Name, so the name is the fourth span (HTMLRewriter has no :last-child).
+      .on('.phero .crumbs > span:nth-of-type(4)', inner(esc(shortName(name))))
       .on('#apps h2', inner(`Where ${esc(shortName(name))} is used`))
       .on('form[data-enquiry] h3', inner(`Inquire about ${esc(name)}`))
       .on('form[data-enquiry]', {element: (el) => el.setAttribute('data-context', `Inquire about ${name}`)});
@@ -120,7 +121,13 @@ export async function productPage(request, env, slug) {
   }
   if (!content) return tagged(page, 'static; story not found');
 
-  const res = new Response(rewriter(content, draft).transform(page).body, page);
+  let rw;
+  try {
+    rw = rewriter(content, draft);
+  } catch (error) {
+    return tagged(page, `static; ${error.message}`.slice(0, 200));
+  }
+  const res = new Response(rw.transform(page).body, page);
   res.headers.delete('etag');
   res.headers.set('cache-control', draft ? 'no-store' : 'public, max-age=0, must-revalidate');
   res.headers.set('x-content-source', draft ? 'storyblok draft' : 'storyblok');
