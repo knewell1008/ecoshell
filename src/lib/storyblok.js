@@ -96,23 +96,32 @@ function rewriter(c, draft) {
   return rw;
 }
 
+// x-content-source says which copy was served, for checking from outside: storyblok, or static with the reason.
+function tagged(page, source) {
+  const res = new Response(page.body, page);
+  res.headers.set('x-content-source', source);
+  return res;
+}
+
 export async function productPage(request, env, slug) {
   const page = await env.ASSETS.fetch(request);
+  if (page.status !== 200 || !(page.headers.get('content-type') || '').includes('text/html')) return page;
   const token = await resolveSecret(env.STORYBLOK_TOKEN);
-  if (!token || page.status !== 200 || !(page.headers.get('content-type') || '').includes('text/html')) return page;
+  if (!token) return tagged(page, 'static; no token');
 
   const url = new URL(request.url);
   let content, draft = false;
   try {
     draft = await isPreview(url, token);
     content = await fetchProduct(slug, token, draft);
-  } catch {
-    content = null;
+  } catch (error) {
+    return tagged(page, `static; ${error.message}`.slice(0, 200));
   }
-  if (!content) return page;
+  if (!content) return tagged(page, 'static; story not found');
 
   const res = new Response(rewriter(content, draft).transform(page).body, page);
   res.headers.delete('etag');
   res.headers.set('cache-control', draft ? 'no-store' : 'public, max-age=0, must-revalidate');
+  res.headers.set('x-content-source', draft ? 'storyblok draft' : 'storyblok');
   return res;
 }
