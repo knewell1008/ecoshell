@@ -10,11 +10,7 @@
   "vars": {
     "SUPABASE_URL": "https://bogzsjzqdewbsgglqvpr.supabase.co"
   },
-  "secrets_store_secrets": [
-    {
-      "binding": "SUPABASE_SERVICE_ROLE_KEY",
-      "store_id": "bd74015265004924a38cb772e6fbb2f9",
-      "secret_name": "SUPABASE_SERVICE_ROLE_KEY"
-    }
-  ]
+  // SUPABASE_SERVICE_ROLE_KEY is a Worker secret, set in the dashboard under
+  // Settings > Variables and Secrets (or with `wrangler secret put`).
+  "keep_vars": true
 }

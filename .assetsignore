@@ -6,3 +6,10 @@ supabase
 wrangler.jsonc
 README.md
 site-src
+.codex-build
+.codex-finalizer
+.codex-output
+.wrangler
+brand-output
+tools
+assets/img/New Images
