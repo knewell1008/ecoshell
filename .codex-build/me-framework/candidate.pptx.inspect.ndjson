@@ -1,0 +1,65 @@
+{"kind":"deck","id":"pr/d9i4q2","name":"Deck"}
+{"kind":"layout","layoutId":"c0e06af4-bc3f-4b2f-b23b-0a665dd80d95","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"e0d927ca-84cf-4ef1-a915-0b8efbd50da2","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/92fr17","slide":1,"title":"HOW WE DELIVER IMPACT PROGRAMS","textShapes":39}
+{"kind":"textbox","id":"sh/7apkrqxc","slide":1,"text":"HOW WE DELIVER IMPACT PROGRAMS","textPreview":"HOW WE DELIVER IMPACT PROGRAMS","textChars":30,"textLines":1,"bbox":[70,48,520,24]}
+{"kind":"textbox","id":"sh/8byl0vex","slide":1,"text":"Monitoring and Evaluation Framework","textPreview":"Monitoring and Evaluation Framework","textChars":35,"textLines":1,"bbox":[70,88,1120,54]}
+{"kind":"textbox","id":"sh/tc72t0fi","slide":1,"text":"Measurement is designed upfront, then used through delivery to guide management decisions.","textPreview":"Measurement is designed upfront, then used through delivery to guide management decisions.","textChars":90,"textLines":1,"bbox":[72,140,850,30]}
+{"kind":"shape","id":"sh/udg325w3","slide":1,"bbox":[70,196,218,70]}
+{"kind":"textbox","id":"sh/vepkvaxo","slide":1,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[86,213,30,30]}
+{"kind":"textbox","id":"sh/gfyl4fe9","slide":1,"text":"Impact Strategy","textPreview":"Impact Strategy","textChars":15,"textLines":1,"bbox":[122,210,152,48]}
+{"kind":"shape","id":"sh/hg72xkfu","slide":1,"bbox":[70,278,218,274]}
+{"kind":"textbox","id":"sh/ahcjqlgz","slide":1,"text":"Stakeholder priorities","textPreview":"Stakeholder priorities","textChars":22,"textLines":1,"bbox":[92,296,174,28]}
+{"kind":"textbox","id":"sh/bi5kj6xk","slide":1,"text":"Theory of change","textPreview":"Theory of change","textChars":16,"textLines":1,"bbox":[92,338,174,28]}
+{"kind":"textbox","id":"sh/36d0zmpo","slide":1,"text":"Goals and governance","textPreview":"Goals and governance","textChars":20,"textLines":1,"bbox":[92,380,174,28]}
+{"kind":"shape","id":"sh/254z6h83","slide":1,"bbox":[88,476,182,58]}
+{"kind":"textbox","id":"sh/p8vi1w7u","slide":1,"text":"Materiality, targets and program logic","textPreview":"Materiality, targets and program logic","textChars":38,"textLines":1,"bbox":[100,489,158,36]}
+{"kind":"shape","id":"sh/o7mh8rq9","slide":1,"bbox":[291,365,18,18]}
+{"kind":"shape","id":"sh/f2tgvmps","slide":1,"bbox":[310,196,218,70]}
+{"kind":"textbox","id":"sh/e1kz2h87","slide":1,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[326,213,30,30]}
+{"kind":"textbox","id":"sh/14vyxc7y","slide":1,"text":"Collection of Information","textPreview":"Collection of Information","textChars":25,"textLines":1,"bbox":[362,210,152,48]}
+{"kind":"shape","id":"sh/g32h4rqd","slide":1,"bbox":[310,278,218,274]}
+{"kind":"textbox","id":"sh/retgr2pg","slide":1,"text":"Baseline diagnostic","textPreview":"Baseline diagnostic","textChars":19,"textLines":1,"bbox":[332,296,174,28]}
+{"kind":"textbox","id":"sh/6dkzyx8b","slide":1,"text":"Survey and field data","textPreview":"Survey and field data","textChars":21,"textLines":1,"bbox":[332,338,174,28]}
+{"kind":"textbox","id":"sh/u90zaxs3","slide":1,"text":"Partner and admin data","textPreview":"Partner and admin data","textChars":22,"textLines":1,"bbox":[332,380,174,28]}
+{"kind":"shape","id":"sh/va90j2to","slide":1,"bbox":[328,476,182,58]}
+{"kind":"textbox","id":"sh/wbihc7at","slide":1,"text":"Sampling plans, field tools and source data","textPreview":"Sampling plans, field tools and source data","textChars":43,"textLines":1,"bbox":[340,489,158,36]}
+{"kind":"shape","id":"sh/hcrilcbe","slide":1,"bbox":[531,365,18,18]}
+{"kind":"shape","id":"sh/idkjehsz","slide":1,"bbox":[550,196,218,70]}
+{"kind":"textbox","id":"sh/jet0nmtk","slide":1,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[566,213,30,30]}
+{"kind":"textbox","id":"sh/4z21g7a5","slide":1,"text":"Dashboard and IT Tools","textPreview":"Dashboard and IT Tools","textChars":22,"textLines":1,"bbox":[602,210,152,48]}
+{"kind":"shape","id":"sh/50bipcbq","slide":1,"bbox":[550,278,218,274]}
+{"kind":"textbox","id":"sh/61kjihsb","slide":1,"text":"Indicator framework","textPreview":"Indicator framework","textChars":19,"textLines":1,"bbox":[572,296,174,28]}
+{"kind":"textbox","id":"sh/r2t0rmtg","slide":1,"text":"Reporting dashboard","textPreview":"Reporting dashboard","textChars":19,"textLines":1,"bbox":[572,338,174,28]}
+{"kind":"textbox","id":"sh/1wf2hgvy","slide":1,"text":"Mobile and web channels","textPreview":"Mobile and web channels","textChars":23,"textLines":1,"bbox":[572,380,174,28]}
+{"kind":"shape","id":"sh/gvml8bud","slide":1,"bbox":[568,476,182,58]}
+{"kind":"textbox","id":"sh/fudkf6ds","slide":1,"text":"Web dashboard, WhatsApp channel and data model","textPreview":"Web dashboard, WhatsApp channel and data model","textChars":46,"textLines":1,"bbox":[580,489,158,36]}
+{"kind":"shape","id":"sh/et436lc7","slide":1,"bbox":[771,365,18,18]}
+{"kind":"shape","id":"sh/p0fml0vu","slide":1,"bbox":[790,196,218,70]}
+{"kind":"textbox","id":"sh/oz6lcvu9","slide":1,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[806,213,30,30]}
+{"kind":"textbox","id":"sh/3yxkjqdo","slide":1,"text":"Implementation","textPreview":"Implementation","textChars":14,"textLines":1,"bbox":[842,210,152,48]}
+{"kind":"shape","id":"sh/2xo3alcj","slide":1,"bbox":[790,278,218,274]}
+{"kind":"textbox","id":"sh/d4zmp0v6","slide":1,"text":"Program rollout","textPreview":"Program rollout","textChars":15,"textLines":1,"bbox":[812,296,174,28]}
+{"kind":"textbox","id":"sh/c36lgvul","slide":1,"text":"Project management","textPreview":"Project management","textChars":18,"textLines":1,"bbox":[812,338,174,28]}
+{"kind":"textbox","id":"sh/8ja58zet","slide":1,"text":"Training and coordination","textPreview":"Training and coordination","textChars":25,"textLines":1,"bbox":[812,380,174,28]}
+{"kind":"shape","id":"sh/9kj6h4fe","slide":1,"bbox":[808,476,182,58]}
+{"kind":"textbox","id":"sh/mxsn69wn","slide":1,"text":"Pilot rollout and operating rhythm","textPreview":"Pilot rollout and operating rhythm","textChars":34,"textLines":1,"bbox":[820,489,158,36]}
+{"kind":"shape","id":"sh/7y1ofux8","slide":1,"bbox":[1011,365,18,18]}
+{"kind":"shape","id":"sh/kvq54zeh","slide":1,"bbox":[1030,196,218,70]}
+{"kind":"textbox","id":"sh/lwj6d4f2","slide":1,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1046,213,30,30]}
+{"kind":"textbox","id":"sh/yt8n2pwr","slide":1,"text":"Management Feedback Loops","textPreview":"Management Feedback Loops","textChars":25,"textLines":1,"bbox":[1082,210,152,48]}
+{"kind":"shape","id":"sh/zuhobuxw","slide":1,"bbox":[1030,278,218,274]}
+{"kind":"textbox","id":"sh/4rupgje1","slide":1,"text":"Performance reviews","textPreview":"Performance reviews","textChars":19,"textLines":1,"bbox":[1052,296,174,28]}
+{"kind":"textbox","id":"sh/5s36pofm","slide":1,"text":"Course corrections","textPreview":"Course corrections","textChars":18,"textLines":1,"bbox":[1052,338,174,28]}
+{"kind":"textbox","id":"sh/fyp0vml0","slide":1,"text":"Funding and strategy decisions","textPreview":"Funding and strategy decisions","textChars":30,"textLines":1,"bbox":[1052,380,174,28]}
+{"kind":"shape","id":"sh/exgz2hkf","slide":1,"bbox":[1048,476,182,58]}
+{"kind":"textbox","id":"sh/1krixw3q","slide":1,"text":"Evidence used in steering and investment decisions","textPreview":"Evidence used in steering and investment decisions","textChars":50,"textLines":1,"bbox":[1060,489,158,36]}
+{"kind":"shape","id":"sh/0zyh4r25","slide":1,"bbox":[70,570,1140,56]}
+{"kind":"textbox","id":"sh/nm90zmlw","slide":1,"text":"Feedback loop","textPreview":"Feedback loop","textChars":13,"textLines":1,"bbox":[94,586,180,28]}
+{"kind":"textbox","id":"sh/2l0z6hkb","slide":1,"text":"Management reviews convert monitoring data into decisions on delivery, resources and strategy","textPreview":"Management reviews convert monitoring data into decisions on delivery, resources and strategy","textChars":93,"textLines":1,"bbox":[292,588,790,28]}
+{"kind":"textbox","id":"sh/pori1w32","slide":1,"text":"returns to steps 1 and 4","textPreview":"returns to steps 1 and 4","textChars":24,"textLines":1,"bbox":[1040,590,145,24]}
+{"kind":"shape","id":"sh/oni18r2h","slide":1,"bbox":[178,545,952,25]}
+{"kind":"textbox","id":"sh/3q50n2ls","slide":1,"text":"THRUSHCROSS","textPreview":"THRUSHCROSS","textChars":11,"textLines":1,"bbox":[72,665,150,20]}
+{"kind":"textbox","id":"sh/ipwzuxk7","slide":1,"text":"Advisory Services","textPreview":"Advisory Services","textChars":17,"textLines":1,"bbox":[112,684,82,12]}
+{"kind":"textbox","id":"sh/6l43254v","slide":1,"text":"GrainPro  |  Impact conversation  ·  4","textPreview":"GrainPro  |  Impact conversation  ·  4","textChars":38,"textLines":1,"bbox":[940,668,270,24]}
+{"kind":"notes","id":"nt/92fr17","slide":1,"text":"Created from the user's reference slide and requested five-part Monitoring and Evaluation Framework structure."}

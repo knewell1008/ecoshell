@@ -1,0 +1,35 @@
+{"kind":"deck","id":"pr/dibkbi","name":"Deck"}
+{"kind":"layout","layoutId":"63b9a330-eaa2-4bd2-9365-3240121aa752","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"ced0861b-7d26-4f7b-85a6-fdd7d58f8cd2","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/dl44i4","slide":1,"title":"MEASURING SOCIAL IMPACT","textShapes":21}
+{"kind":"textbox","id":"sh/lo7ylc72","slide":1,"text":"MEASURING SOCIAL IMPACT","textPreview":"MEASURING SOCIAL IMPACT","textChars":23,"textLines":1,"bbox":[78,58,500,28]}
+{"kind":"textbox","id":"sh/y1gzqx8b","slide":1,"text":"Our Working View of GrainPro's Impact Model","textPreview":"Our Working View of GrainPro's Impact Model","textChars":43,"textLines":1,"bbox":[78,100,1040,58]}
+{"kind":"textbox","id":"sh/j2pgj2pw","slide":1,"text":"A starting point for discussion: what is right, what is missing, and what matters most","textPreview":"A starting point for discussion: what is right, what is missing, and what matters most","textChars":86,"textLines":1,"bbox":[82,158,980,28]}
+{"kind":"shape","id":"sh/8rihwrqt","slide":1,"bbox":[78,220,284,260]}
+{"kind":"shape","id":"sh/tsrypw7y","slide":1,"bbox":[78,220,284,58]}
+{"kind":"textbox","id":"sh/6p0zuh8n","slide":1,"text":"WHAT GRAINPRO ENABLES","textPreview":"WHAT GRAINPRO ENABLES","textChars":21,"textLines":1,"bbox":[96,235,248,30]}
+{"kind":"textbox","id":"sh/7q9gnmp8","slide":1,"text":"Hermetic storage technology","textPreview":"Hermetic storage technology","textChars":27,"textLines":1,"bbox":[100,302,240,35]}
+{"kind":"textbox","id":"sh/ovexknq9","slide":1,"text":"Distribution through partners","textPreview":"Distribution through partners","textChars":29,"textLines":1,"bbox":[100,347,240,35]}
+{"kind":"textbox","id":"sh/9wnyds7u","slide":1,"text":"Training on correct use","textPreview":"Training on correct use","textChars":23,"textLines":1,"bbox":[100,392,240,35]}
+{"kind":"shape","id":"sh/1cra1ojm","slide":1,"bbox":[381,339,24,18]}
+{"kind":"shape","id":"sh/gbits3i1","slide":1,"bbox":[430,220,330,260]}
+{"kind":"shape","id":"sh/fa9szy1g","slide":1,"bbox":[430,220,330,58]}
+{"kind":"textbox","id":"sh/e90bqt0v","slide":1,"text":"WHAT CHANGES FOR USERS","textPreview":"WHAT CHANGES FOR USERS","textChars":22,"textLines":1,"bbox":[448,235,294,30]}
+{"kind":"textbox","id":"sh/p0ba58ji","slide":1,"text":"Lower storage losses","textPreview":"Lower storage losses","textChars":20,"textLines":1,"bbox":[452,302,286,35]}
+{"kind":"textbox","id":"sh/of2tw3ix","slide":1,"text":"Better crop quality and prices","textPreview":"Better crop quality and prices","textChars":30,"textLines":1,"bbox":[452,347,286,35]}
+{"kind":"textbox","id":"sh/3ets3y1c","slide":1,"text":"More choice on when to sell","textPreview":"More choice on when to sell","textChars":27,"textLines":1,"bbox":[452,392,286,35]}
+{"kind":"textbox","id":"sh/2dkbut0r","slide":1,"text":"Reduced pesticide use","textPreview":"Reduced pesticide use","textChars":21,"textLines":1,"bbox":[452,437,286,35]}
+{"kind":"shape","id":"sh/d4ba98je","slide":1,"bbox":[779,339,24,18]}
+{"kind":"shape","id":"sh/c32t0ni9","slide":1,"bbox":[828,220,374,260]}
+{"kind":"shape","id":"sh/w7adwrq5","slide":1,"bbox":[828,220,374,58]}
+{"kind":"textbox","id":"sh/x8ju5w7q","slide":1,"text":"WHAT THIS CAN SUPPORT","textPreview":"WHAT THIS CAN SUPPORT","textChars":21,"textLines":1,"bbox":[846,235,338,30]}
+{"kind":"textbox","id":"sh/alsvuh8f","slide":1,"text":"Smallholder income and food security","textPreview":"Smallholder income and food security","textChars":36,"textLines":1,"bbox":[850,302,330,35]}
+{"kind":"textbox","id":"sh/bm1c3mpk","slide":1,"text":"Avoided emissions from lost food","textPreview":"Avoided emissions from lost food","textChars":32,"textLines":1,"bbox":[850,347,330,35]}
+{"kind":"textbox","id":"sh/kbud0rqh","slide":1,"text":"Reduced plastic waste","textPreview":"Reduced plastic waste","textChars":21,"textLines":1,"bbox":[850,392,330,35]}
+{"kind":"shape","id":"sh/lc3u9w72","slide":1,"bbox":[78,514,1124,78]}
+{"kind":"textbox","id":"sh/y9cvy18b","slide":1,"text":"Questions for discussion","textPreview":"Questions for discussion","textChars":24,"textLines":1,"bbox":[104,532,280,28]}
+{"kind":"textbox","id":"sh/jalc7mpw","slide":1,"text":"Which outcomes matter most? Where is the evidence already strong? Where is measurement difficult? What story would help GrainPro commercially or strategically?","textPreview":"Which outcomes matter most? Where is the evidence already strong? Where is measurement difficult? What story would help GrainPro commerci...","textChars":159,"textLines":1,"bbox":[392,528,760,44]}
+{"kind":"textbox","id":"sh/0fqdo7qx","slide":1,"text":"THRUSHCROSS","textPreview":"THRUSHCROSS","textChars":11,"textLines":1,"bbox":[82,660,150,20]}
+{"kind":"textbox","id":"sh/1gzuxcri","slide":1,"text":"Advisory Services","textPreview":"Advisory Services","textChars":17,"textLines":1,"bbox":[122,679,82,12]}
+{"kind":"textbox","id":"sh/3apg3a90","slide":1,"text":"GrainPro  |  Impact conversation  ·  3","textPreview":"GrainPro  |  Impact conversation  ·  3","textChars":38,"textLines":1,"bbox":[910,664,292,24]}
+{"kind":"notes","id":"nt/dl44i4","slide":1,"text":"Created as a less technical alternative to a Theory of Change slide. The slide frames Thrushcross's understanding as a working view for discussion."}

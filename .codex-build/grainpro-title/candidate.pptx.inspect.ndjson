@@ -1,0 +1,19 @@
+{"kind":"deck","id":"pr/b4dyn2","name":"Deck"}
+{"kind":"layout","layoutId":"c66bbbf0-b3ed-4ddd-8373-f72c25ede001","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"31309789-3e8b-4c05-baf8-61813c13226c","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/tkeb3h","slide":1,"title":"THRUSHCROSS ADVISORY SERVICES","textShapes":9}
+{"kind":"shape","id":"sh/9kzq943q","slide":1,"bbox":[0,0,1280,160]}
+{"kind":"shape","id":"sh/mxorep4f","slide":1,"bbox":[0,560,1280,160]}
+{"kind":"shape","id":"sh/7ih87ulk","slide":1,"bbox":[0,160,1280,2]}
+{"kind":"shape","id":"sh/gnq9kzmh","slide":1,"bbox":[0,558,1280,2]}
+{"kind":"textbox","id":"sh/hozqd432","slide":1,"text":"THRUSHCROSS ADVISORY SERVICES","textPreview":"THRUSHCROSS ADVISORY SERVICES","textChars":29,"textLines":1,"bbox":[72,68,480,28]}
+{"kind":"textbox","id":"sh/ul8ri94b","slide":1,"text":"Prepared for GrainPro","textPreview":"Prepared for GrainPro","textChars":21,"textLines":1,"bbox":[72,104,360,24]}
+{"kind":"shape","id":"sh/vmh8bulw","slide":1,"bbox":[72,240,86,4]}
+{"kind":"textbox","id":"sh/4ra98jmd","slide":1,"text":"A Conversation on","textPreview":"A Conversation on","textChars":17,"textLines":1,"bbox":[72,276,700,62]}
+{"kind":"textbox","id":"sh/5sjaho3y","slide":1,"text":"GrainPro's Impact Journey","textPreview":"GrainPro's Impact Journey","textChars":25,"textLines":1,"bbox":[72,330,930,72]}
+{"kind":"textbox","id":"sh/xwvml4n6","slide":1,"text":"Exploring where measurement, delivery and decision-making can support the next stage","textPreview":"Exploring where measurement, delivery and decision-making can support the next stage","textChars":84,"textLines":1,"bbox":[76,420,880,42]}
+{"kind":"textbox","id":"sh/wvm5sz6l","slide":1,"text":"Working session","textPreview":"Working session","textChars":15,"textLines":1,"bbox":[76,496,220,26]}
+{"kind":"textbox","id":"sh/bud4je50","slide":1,"text":"September 2026","textPreview":"September 2026","textChars":14,"textLines":1,"bbox":[300,496,220,26]}
+{"kind":"textbox","id":"sh/at4nq9of","slide":1,"text":"THRUSHCROSS","textPreview":"THRUSHCROSS","textChars":11,"textLines":1,"bbox":[924,622,260,34]}
+{"kind":"textbox","id":"sh/l0fmpon2","slide":1,"text":"Advisory Services","textPreview":"Advisory Services","textChars":17,"textLines":1,"bbox":[1006,654,175,20]}
+{"kind":"notes","id":"nt/tkeb3h","slide":1,"text":"Standalone title slide created from the user's requested collaborative positioning for the GrainPro impact conversation."}
