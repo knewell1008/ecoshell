@@ -64,6 +64,15 @@ function secHead(b) {
     (str(b.intro) ? `<p>${fmt(b.intro)}</p>` : '') + side + '</div>';
 }
 
+// A grid under a heading nests inside .wrap; without a heading the grid is the .wrap itself (as the static pages do).
+function gridWrap(b, grid, inner) {
+  const head = secHead(b);
+  const [cls, style] = grid.split('" style="');
+  return head
+    ? `<div class="wrap">${head}<div class="${grid}">${inner}</div></div>`
+    : `<div class="wrap ${cls}"${style ? ` style="${style}"` : ''}>${inner}</div>`;
+}
+
 const BTN = {
   primary: (b) => `<a class="btn btn--primary"${href(b.link)}>${fmt(b.label)}</a>`,
   outline: (b) => `<a class="btn btn--outline"${href(b.link)}>${fmt(b.label)}</a>`,
@@ -158,7 +167,7 @@ R.cards = (b) => {
     }
     return `<${tag} class="card"${href(c.link)}>${icon(c.icon)}<h3${b.small_titles ? ' style="font-size:19px"' : ''}>${fmt(c.title)}</h3>${str(c.text) ? `<p>${fmt(c.text)}</p>` : ''}${arrow}</${tag}>`;
   }).join('');
-  return section(b, `<div class="wrap">${secHead(b)}<div class="${GRID[b.columns] || GRID[3]}">${cards}</div></div>`);
+  return section(b, gridWrap(b, GRID[b.columns] || GRID[3], cards));
 };
 
 R.steps = (b) => section(b, `<div class="wrap">${secHead(b)}<div class="steps">${list(b.items).filter((s) => str(s.title)).map((s) => `<div><h3>${fmt(s.title)}</h3><p>${fmt(s.text)}</p></div>`).join('')}</div>` +
@@ -191,12 +200,12 @@ R.logos = (b) => {
 
 R.definition_list = (b) => section(b, `<div class="wrap">${secHead(b)}${dlist(b.items)}${str(b.footer) ? `<p style="margin-top:24px;color:var(--muted)">${fmt(b.footer)}</p>` : ''}</div>`);
 
-R.people = (b) => section(b, `<div class="wrap">${secHead(b)}<div class="grid g3" style="gap:32px">${list(b.items).filter((p) => str(p.name)).map((p) =>
-  `<div class="person"><img src="${attr(assetUrl(p.photo, 900))}" alt="${attr(p.name)}"><span class="role">${fmt(p.role)}</span><h3>${fmt(p.name)}</h3><p>${fmt(p.bio)}</p><div style="display:flex;gap:16px"><a class="arrow"${href(p.linkedin)}>LinkedIn</a></div></div>`).join('')}</div></div>`);
+R.people = (b) => section(b, gridWrap(b, 'grid g3" style="gap:32px', list(b.items).filter((p) => str(p.name)).map((p) =>
+  `<div class="person"><img src="${attr(assetUrl(p.photo, 900))}" alt="${attr(p.name)}"><span class="role">${fmt(p.role)}</span><h3>${fmt(p.name)}</h3><p>${fmt(p.bio)}</p><div style="display:flex;gap:16px"><a class="arrow"${href(p.linkedin)}>LinkedIn</a></div></div>`).join('')));
 
-R.downloads = (b) => section(b, `<div class="wrap">${secHead(b)}<div class="grid g3" style="gap:32px">${list(b.groups).map((g) =>
+R.downloads = (b) => section(b, gridWrap(b, 'grid g3" style="gap:32px', list(b.groups).map((g) =>
   `<div class="side"><span class="eyebrow">${fmt(g.eyebrow)}</span>${list(g.items).filter((d) => str(d.title)).map((d) =>
-    `<a class="dl" href="${attr(d.file?.filename || '/contact?type=Sales')}"><i>PDF</i><div><b>${fmt(d.title)}</b><small>${fmt(d.caption)}</small></div></a>`).join('')}</div>`).join('')}</div></div>`);
+    `<a class="dl" href="${attr(d.file?.filename || '/contact?type=Sales')}"><i>PDF</i><div><b>${fmt(d.title)}</b><small>${fmt(d.caption)}</small></div></a>`).join('')}</div>`).join('')));
 
 R.cta = (b) => {
   const btns = list(b.buttons).length ? buttons(b.buttons)
