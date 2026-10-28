@@ -71,8 +71,10 @@ function rewriter(c, draft) {
     });
   }
   if (image) {
+    // Storyblok asset URLs carry the size (/f/<space>/<w>x<h>/...); only shrink, never upscale.
+    const width = Number(/\/(\d+)x\d+\//.exec(image)?.[1] || 0);
     rw = rw.on('.phero img', {element: (el) => {
-      el.setAttribute('src', `${image}/m/1600x0`);
+      el.setAttribute('src', `${image}/m/${width > 1600 ? '1600x0' : ''}`);
       el.setAttribute('alt', str(c.hero_image.alt));
     }});
   }
