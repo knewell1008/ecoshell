@@ -1,0 +1,265 @@
+{
+  "_note": "Storyblok block definitions, loaded by tools/storyblok-setup.ps1 (field order sets the order editors see). Rendering: src/lib/blocks.js (Page blocks) and src/lib/storyblok.js (Product).",
+  "sections": ["hero", "home_hero", "text_split", "image_split", "cards", "steps", "chips", "table", "stats", "badges", "industries", "logos", "definition_list", "people", "downloads", "cta", "inquiry_form", "contact_form"],
+  "components": [
+    {"name": "page", "display_name": "Page", "is_root": true, "is_nestable": false, "schema": {
+      "title": {"type": "text", "required": true, "max_length": 70, "description": "Shown in the browser tab and search results"},
+      "description": {"type": "textarea", "max_length": 170, "description": "One or two sentences for search results"},
+      "body": {"type": "bloks", "restrict_components": true, "component_whitelist": "@sections", "description": "Sections of the page, top to bottom. In text, [text] shows as a placeholder and {text} as a review flag."}
+    }},
+
+    {"name": "hero", "display_name": "Page header", "is_root": false, "is_nestable": true, "schema": {
+      "crumbs": {"type": "bloks", "restrict_components": true, "component_whitelist": ["crumb"], "description": "Breadcrumb trail; the last one is this page"},
+      "eyebrow": {"type": "text", "max_length": 60},
+      "title": {"type": "text", "required": true, "max_length": 80},
+      "subtitle": {"type": "textarea", "max_length": 260},
+      "image": {"type": "asset", "filetypes": ["images"], "description": "Wide photo, at least 1200 px across"},
+      "dark": {"type": "boolean", "description": "Dark green background"},
+      "buttons": {"type": "bloks", "restrict_components": true, "component_whitelist": ["button"], "maximum": 3}
+    }},
+    {"name": "home_hero", "display_name": "Home slideshow", "is_root": false, "is_nestable": true, "schema": {
+      "slides": {"type": "bloks", "restrict_components": true, "component_whitelist": ["slide"], "description": "The first slide can play a video"},
+      "benefits": {"type": "bloks", "restrict_components": true, "component_whitelist": ["benefit_column"], "maximum": 2, "description": "Benefit lists under the slideshow"}
+    }},
+    {"name": "text_split", "display_name": "Text with heading", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "large_heading": {"type": "boolean"},
+      "lead": {"type": "textarea", "description": "Larger opening paragraph"},
+      "body": {"type": "textarea", "description": "Leave a blank line between paragraphs"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["list_item"], "description": "Optional list of term and description pairs"},
+      "note": {"type": "textarea", "description": "Optional highlighted note"},
+      "link_label": {"type": "text"},
+      "link": {"type": "multilink"},
+      "formula": {"type": "text", "description": "Optional large formula under the heading, e.g. CaCO3"},
+      "formula_caption": {"type": "text"},
+      "centered": {"type": "boolean", "description": "Centre the two columns vertically"},
+      "background": {"type": "option", "options": [{"name": "Mist", "value": "mist"}, {"name": "Eggshell", "value": "egg"}, {"name": "Deep green", "value": "deep"}], "description": "Empty is white"},
+      "anchor": {"type": "text", "description": "Optional id for links to this section, e.g. epr for #epr"}
+    }},
+    {"name": "image_split", "display_name": "Image with text", "is_root": false, "is_nestable": true, "schema": {
+      "image": {"type": "asset", "filetypes": ["images"]},
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "text": {"type": "textarea"},
+      "buttons": {"type": "bloks", "restrict_components": true, "component_whitelist": ["button"], "maximum": 3},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "cards", "display_name": "Cards", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "link_label": {"type": "text", "description": "Optional link beside the heading"},
+      "link": {"type": "multilink"},
+      "columns": {"type": "option", "options": [{"name": "2", "value": "2"}, {"name": "3", "value": "3"}, {"name": "4", "value": "4"}, {"name": "Fit to width", "value": "auto"}], "default_value": "3"},
+      "small_titles": {"type": "boolean"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["card"]},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "steps", "display_name": "Steps", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["step"]},
+      "note": {"type": "text", "description": "Small note under the steps"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "chips", "display_name": "Tag lists", "is_root": false, "is_nestable": true, "schema": {
+      "groups": {"type": "bloks", "restrict_components": true, "component_whitelist": ["chip_group"], "maximum": 2, "description": "One list, or two side by side"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "table", "display_name": "Table", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "header": {"type": "text", "description": "Column headings separated by |"},
+      "rows": {"type": "bloks", "restrict_components": true, "component_whitelist": ["table_row"]},
+      "compare": {"type": "boolean", "description": "Comparison style"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "stats", "display_name": "Numbers", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["stat"], "maximum": 4},
+      "link_label": {"type": "text"},
+      "link": {"type": "multilink"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "badges", "display_name": "Badges", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["badge"]},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "industries", "display_name": "Industries", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["list_item"]},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "logos", "display_name": "Logo strip", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "textarea", "description": "One name per line"},
+      "anchor": "@anchor"
+    }},
+    {"name": "definition_list", "display_name": "List", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["list_item"]},
+      "footer": {"type": "textarea"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "people", "display_name": "People", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["person"]},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "downloads", "display_name": "Downloads", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "groups": {"type": "bloks", "restrict_components": true, "component_whitelist": ["download_group"], "maximum": 3},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "cta", "display_name": "Call to action", "is_root": false, "is_nestable": true, "schema": {
+      "heading": {"type": "text", "max_length": 90},
+      "text": {"type": "textarea"},
+      "buttons": {"type": "bloks", "restrict_components": true, "component_whitelist": ["button"], "maximum": 3, "description": "Empty shows Request a sample and Contact us"},
+      "anchor": "@anchor"
+    }},
+    {"name": "inquiry_form", "display_name": "Inquiry form", "is_root": false, "is_nestable": true, "schema": {
+      "form_title": {"type": "text", "max_length": 60},
+      "selects": {"type": "bloks", "restrict_components": true, "component_whitelist": ["select_field"], "maximum": 4, "description": "Extra dropdowns; name, company, email, country and message are always there"},
+      "button_label": {"type": "text", "default_value": "Send inquiry"},
+      "side_note": {"type": "textarea", "description": "Note beside the form"},
+      "eyebrow": {"type": "text", "description": "Optional intro column instead of the side note"},
+      "heading": {"type": "text"},
+      "text": {"type": "textarea"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["list_item"]},
+      "form_note": {"type": "text", "description": "Small note under the form (with the intro column)"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+    {"name": "contact_form", "display_name": "Contact form", "is_root": false, "is_nestable": true, "schema": {
+      "types": {"type": "textarea", "description": "Inquiry types, one per line"},
+      "selects": {"type": "bloks", "restrict_components": true, "component_whitelist": ["select_field"], "maximum": 2},
+      "button_label": {"type": "text", "default_value": "Send"},
+      "contacts_eyebrow": {"type": "text"},
+      "contacts": {"type": "bloks", "restrict_components": true, "component_whitelist": ["list_item"]},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
+
+    {"name": "crumb", "display_name": "Breadcrumb", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "required": true}, "link": {"type": "multilink"}
+    }},
+    {"name": "button", "display_name": "Button", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "required": true, "max_length": 40},
+      "link": {"type": "multilink"},
+      "style": {"type": "option", "options": [{"name": "Primary", "value": "primary"}, {"name": "Outline", "value": "outline"}, {"name": "Outline on dark", "value": "outline-light"}, {"name": "Lime", "value": "lime"}, {"name": "Text link", "value": "arrow"}], "default_value": "primary"}
+    }},
+    {"name": "slide", "display_name": "Slide", "is_root": false, "is_nestable": true, "schema": {
+      "image": {"type": "asset", "filetypes": ["images"], "description": "Also the video's still frame"},
+      "video": {"type": "asset", "filetypes": ["videos"], "description": "Optional, plays muted on a loop"},
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 80},
+      "text": {"type": "textarea", "max_length": 260},
+      "buttons": {"type": "bloks", "restrict_components": true, "component_whitelist": ["button"], "maximum": 2},
+      "readout_title": {"type": "text", "description": "Optional data panel on the slide"},
+      "readout": {"type": "bloks", "restrict_components": true, "component_whitelist": ["list_item"]}
+    }},
+    {"name": "benefit_column", "display_name": "Benefit list", "is_root": false, "is_nestable": true, "schema": {
+      "heading": {"type": "text"}, "items": {"type": "textarea", "description": "One benefit per line"}
+    }},
+    {"name": "list_item", "display_name": "List item", "is_root": false, "is_nestable": true, "schema": {
+      "term": {"type": "text"}, "text": {"type": "textarea"},
+      "link_label": {"type": "text", "description": "Optional link at the end of the line"}, "link": {"type": "multilink"}
+    }},
+    {"name": "card", "display_name": "Card", "is_root": false, "is_nestable": true, "schema": {
+      "title": {"type": "text", "required": true, "max_length": 80},
+      "text": {"type": "textarea", "max_length": 240},
+      "icon": {"type": "option", "options": [{"name": "Material", "value": "material"}, {"name": "Manufacturing", "value": "manufacturing"}, {"name": "Packaging", "value": "packaging"}, {"name": "Custom", "value": "custom"}, {"name": "Leaf", "value": "leaf"}, {"name": "Shield", "value": "shield"}, {"name": "Document", "value": "doc"}], "description": "Ignored when the card has an image"},
+      "image": {"type": "asset", "filetypes": ["images"]},
+      "tag": {"type": "text", "max_length": 30, "description": "Small label above the title (image cards)"},
+      "link": {"type": "multilink"},
+      "link_label": {"type": "text", "description": "e.g. View product"}
+    }},
+    {"name": "step", "display_name": "Step", "is_root": false, "is_nestable": true, "schema": {
+      "title": {"type": "text", "required": true}, "text": {"type": "textarea"}
+    }},
+    {"name": "chip_group", "display_name": "Tag list", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text"}, "heading": {"type": "text"},
+      "items": {"type": "textarea", "description": "One tag per line"},
+      "muted": {"type": "boolean", "description": "Dashed, for things not available yet"}
+    }},
+    {"name": "table_row", "display_name": "Table row", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "description": "First column"},
+      "note": {"type": "text", "description": "Small text under the label"},
+      "cells": {"type": "textarea", "description": "The other columns, one per line"}
+    }},
+    {"name": "stat", "display_name": "Number", "is_root": false, "is_nestable": true, "schema": {
+      "value": {"type": "text", "max_length": 16}, "label": {"type": "text"}
+    }},
+    {"name": "badge", "display_name": "Badge", "is_root": false, "is_nestable": true, "schema": {
+      "mark": {"type": "text", "max_length": 3, "description": "1-3 letters in the circle"}, "title": {"type": "text"}, "caption": {"type": "text"}
+    }},
+    {"name": "person", "display_name": "Person", "is_root": false, "is_nestable": true, "schema": {
+      "photo": {"type": "asset", "filetypes": ["images"], "description": "Square photo"},
+      "name": {"type": "text", "required": true}, "role": {"type": "text"}, "bio": {"type": "textarea", "max_length": 300},
+      "linkedin": {"type": "multilink"}
+    }},
+    {"name": "select_field", "display_name": "Dropdown", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "required": true}, "options": {"type": "textarea", "description": "One choice per line"}
+    }},
+    {"name": "download_group", "display_name": "Download group", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text"},
+      "items": {"type": "bloks", "restrict_components": true, "component_whitelist": ["download"]}
+    }},
+    {"name": "download", "display_name": "Download", "is_root": false, "is_nestable": true, "schema": {
+      "title": {"type": "text", "required": true}, "caption": {"type": "text"},
+      "file": {"type": "asset", "description": "The PDF. Empty sends people to the contact form"}
+    }},
+
+    {"name": "product", "display_name": "Product", "is_root": true, "is_nestable": false, "schema": {
+      "name": {"type": "text", "required": true, "max_length": 40, "description": "Full product name, e.g. Ecoshell Core"},
+      "summary": {"type": "textarea", "required": true, "max_length": 220, "description": "One or two sentences shown under the product name at the top of the page."},
+      "description": {"type": "textarea", "display_name": "Description", "max_length": 400, "description": "Opening paragraph of the Description section, further down the page. Leave empty to repeat the summary."},
+      "details": {"type": "textarea", "max_length": 900, "description": "Follows the Description: what makes this grade different, the problem it solves, processing window, let-down ratio. Leave a blank line between paragraphs."},
+      "hero_image": {"type": "asset", "filetypes": ["images"], "description": "Wide photo at the top of the page, at least 1200 px across. Remove it to fall back to the built-in photo."},
+      "applications": {"type": "bloks", "restrict_components": true, "component_whitelist": ["application"], "description": "Cards in the Applications section"},
+      "properties": {"type": "bloks", "restrict_components": true, "component_whitelist": ["property"], "description": "Rows in the Typical properties table"}
+    }},
+    {"name": "application", "display_name": "Application", "is_root": false, "is_nestable": true, "schema": {
+      "title": {"type": "text", "required": true, "max_length": 60, "description": "Short name, e.g. \"Caps and closures\""},
+      "description": {"type": "text", "max_length": 140, "description": "One line on how the product is used here"}
+    }},
+    {"name": "property", "display_name": "Technical property", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "required": true, "max_length": 40, "description": "e.g. Density"},
+      "value": {"type": "text", "max_length": 80, "description": "e.g. 1.4 g/cm3. Text in [square brackets] shows as a placeholder."},
+      "method": {"type": "text", "max_length": 40, "description": "Test method, e.g. ISO 1183"}
+    }}
+  ],
+  "shared": {
+    "background": {"type": "option", "options": [{"name": "Mist", "value": "mist"}, {"name": "Eggshell", "value": "egg"}, {"name": "Deep green", "value": "deep"}], "description": "Empty is white"},
+    "anchor": {"type": "text", "description": "Optional id for links to this section, e.g. epr for #epr"}
+  }
+}
