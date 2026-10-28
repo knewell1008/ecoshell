@@ -32,7 +32,8 @@ async function fetchProduct(slug, token, draft) {
   const q = new URLSearchParams({token, version: draft ? 'draft' : 'published'});
   if (draft) q.set('cv', String(Date.now()));
   const res = await fetch(API + slug + '?' + q, draft ? {} : {cf: {cacheTtl: 60, cacheEverything: true}});
-  if (!res.ok) return null;
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Storyblok returned ${res.status}`);
   const content = (await res.json()).story?.content;
   return content?.component === 'product' ? content : null;
 }
@@ -106,7 +107,7 @@ function tagged(page, source) {
 export async function productPage(request, env, slug) {
   const page = await env.ASSETS.fetch(request);
   if (page.status !== 200 || !(page.headers.get('content-type') || '').includes('text/html')) return page;
-  const token = await resolveSecret(env.STORYBLOK_TOKEN);
+  const token = str(await resolveSecret(env.STORYBLOK_TOKEN));
   if (!token) return tagged(page, 'static; no token');
 
   const url = new URL(request.url);
