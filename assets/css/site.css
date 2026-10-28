@@ -1,4 +1,6 @@
 /* Generated from site-src/site.css by site-src/build.mjs. Edit the source, not this file. */
+@font-face{font-family:"Jost";src:url("../fonts/Jost-VariableFont_wght.ttf") format("truetype");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url("../fonts/SourceSans3-VariableFont_wght.ttf") format("truetype");font-weight:200 900;font-style:normal;font-display:swap}
 
 
 .es{

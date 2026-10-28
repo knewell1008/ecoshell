@@ -154,9 +154,6 @@ function head(cur, extraCss = '') {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${title.replace('&', '&amp;')}</title>
 <meta name="description" content="${desc.replace('&', '&amp;')}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Source+Sans+3:wght@300;400;600&display=swap">
 ${extraCss}<link rel="stylesheet" href="${asset(f, 'assets/css/site.css')}">
 <link rel="icon" type="image/png" sizes="32x32" href="${fav('favicon-32x32.png')}">
 <link rel="icon" type="image/png" sizes="16x16" href="${fav('favicon-16x16.png')}">
