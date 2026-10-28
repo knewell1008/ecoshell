@@ -10,9 +10,10 @@
 const str = (v) => String(v ?? '').trim();
 const esc = (v) => str(v).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
 
-export function fmt(v) {
-  return esc(v)
-    .replace(/\[([^\]]*)\]/g, '<span class="ph">[$1]</span>')
+export function fmt(v, {placeholders = true} = {}) {
+  let s = esc(v);
+  if (placeholders) s = s.replace(/\[([^\]]*)\]/g, '<span class="ph">[$1]</span>');
+  return s
     .replace(/\{([^}]*)\}/g, (m, t) => `<span class="flag">${t || 'Confirm'}</span>`)
     .replace(/CaCO3/g, 'CaCO<sub>3</sub>')
     .replace(/\n/g, '<br>');
@@ -87,8 +88,10 @@ function form(b) {
   const ctx = attr(str(b.form_title || 'Send us a message').replace(/[[\]{}]/g, ''));
   const selects = list(b.selects).filter((s) => str(s.label)).map((s) =>
     `<label>${fmt(s.label)}<select data-field="${attr(s.label)}">${lines(s.options).map((o) => `<option>${esc(o)}</option>`).join('')}</select></label>`);
+  // Dropdowns sit two to a row, except beside an intro column where the form is narrow.
   let rows = '';
-  for (let i = 0; i < selects.length; i += 2) rows += `<div class="row">${selects.slice(i, i + 2).join('')}</div>`;
+  if (str(b.heading)) rows = selects.join('');
+  else for (let i = 0; i < selects.length; i += 2) rows += `<div class="row">${selects.slice(i, i + 2).join('')}</div>`;
   return `<form class="form" data-enquiry data-context="${ctx}"><h3>${title}</h3>` +
     '<div class="row"><label>Name<input name="name" autocomplete="name" placeholder="Full name"></label><label>Company<input name="company" autocomplete="organization" placeholder="Company" required></label></div>' +
     '<div class="row"><label>Work email<input type="email" name="email" autocomplete="email" placeholder="name@company.com" required></label><label>Country<input name="country" autocomplete="country-name" placeholder="Country"></label></div>' +
@@ -128,7 +131,8 @@ R.text_split = (b) => {
   const formula = str(b.formula)
     ? `<p class="formula" style="margin-top:36px">${fmt(b.formula)}</p><p style="font:400 13px/1.5 var(--f-display);color:var(--stone);letter-spacing:.06em;margin-top:8px">${fmt(b.formula_caption)}</p>`
     : '';
-  const left = `<div><span class="eyebrow">${fmt(b.eyebrow)}</span><h2 style="${H2_SPLIT}">${fmt(b.heading)}</h2><hr class="rule">${formula}</div>`;
+  const h2 = b.large_heading ? 'font-size:clamp(30px,3.4cqi,42px);color:var(--deep);margin-top:10px' : H2_SPLIT;
+  const left = `<div><span class="eyebrow">${fmt(b.eyebrow)}</span><h2 style="${h2}">${fmt(b.heading)}</h2><hr class="rule">${formula}</div>`;
   const body = paras(b.body).map((p) => `<p>${fmt(p)}</p>`).join('');
   const prose = str(b.lead) || body;
   const note = str(b.note) ? `<div class="note-box" style="margin-top:20px">${fmt(b.note)}</div>` : '';
@@ -152,7 +156,7 @@ R.cards = (b) => {
     if (c.image?.filename) {
       return `<${tag} class="card card--img"${href(c.link)}><img src="${attr(assetUrl(c.image, 900))}" alt="${alt(c.image)}"><div class="body">${str(c.tag) ? `<span class="tag">${fmt(c.tag)}</span>` : ''}<h3>${fmt(c.title)}</h3>${str(c.text) ? `<p>${fmt(c.text)}</p>` : ''}${arrow}</div></${tag}>`;
     }
-    return `<${tag} class="card"${href(c.link)}>${icon(c.icon)}<h3>${fmt(c.title)}</h3>${str(c.text) ? `<p>${fmt(c.text)}</p>` : ''}${arrow}</${tag}>`;
+    return `<${tag} class="card"${href(c.link)}>${icon(c.icon)}<h3${b.small_titles ? ' style="font-size:19px"' : ''}>${fmt(c.title)}</h3>${str(c.text) ? `<p>${fmt(c.text)}</p>` : ''}${arrow}</${tag}>`;
   }).join('');
   return section(b, `<div class="wrap">${secHead(b)}<div class="${GRID[b.columns] || GRID[3]}">${cards}</div></div>`);
 };
@@ -173,7 +177,7 @@ R.table = (b) => {
   return section(b, `<div class="wrap">${secHead(b)}<div class="table-wrap"><table${b.compare ? ' class="compare"' : ''}><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div></div>`);
 };
 
-R.stats = (b) => section({...b, background: b.background || 'deep'}, `<div class="wrap">${secHead({...b, link_label: ''})}<div class="grid g4">${list(b.items).map((s) => `<div class="stat"><b>${fmt(s.value)}</b><span>${fmt(s.label)}</span></div>`).join('')}</div>` +
+R.stats = (b) => section({...b, background: b.background || 'deep'}, `<div class="wrap">${secHead({...b, link_label: ''})}<div class="grid g4">${list(b.items).map((s) => `<div class="stat"><b>${fmt(s.value, {placeholders: false})}</b><span>${fmt(s.label)}</span></div>`).join('')}</div>` +
   (str(b.link_label) ? `<p style="margin-top:32px"><a class="arrow"${href(b.link)}>${fmt(b.link_label)}</a></p>` : '') + '</div>');
 
 R.badges = (b) => section(b, `<div class="wrap">${secHead(b)}<div class="grid g4">${list(b.items).map((x) => `<div class="badge"><i>${fmt(x.mark)}</i><b>${fmt(x.title)}</b><small>${fmt(x.caption)}</small></div>`).join('')}</div></div>`);

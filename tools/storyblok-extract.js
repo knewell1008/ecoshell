@@ -159,6 +159,7 @@ function block(s) {
     const formula = $(left, '.formula');
     const link = $(right, 'a.arrow');
     return blok('text_split', {...common, centered: split.classList.contains('split--center'),
+      large_heading: ($(left, 'h2').getAttribute('style') || '').includes('42px'),
       eyebrow: tx($(left, '.eyebrow')), heading: tx($(left, 'h2')), formula: tx(formula), formula_caption: tx(formula && formula.nextElementSibling),
       lead: tx($(right, 'p.lead')), body: $$(right, ':scope > p:not(.lead)').filter((p) => !$(p, 'a.arrow')).map(tx).join('\n\n'),
       items: dlItems($(right, 'dl.list')), note: tx($(right, '.note-box')), link_label: tx(link), link: ln(link)});
@@ -176,7 +177,8 @@ function block(s) {
         link: c.tagName === 'A' ? ln(c) : null, link_label: tx($(c, '.arrow'))
       });
     });
-    return blok('cards', {...common, ...head(s), columns, items});
+    const smallTitles = $$(grid, ':scope > .card h3').some((h) => (h.getAttribute('style') || '').includes('19px'));
+    return blok('cards', {...common, ...head(s), columns, small_titles: smallTitles, items});
   }
   if ($(s, 'dl.list')) {
     const dl = $(s, 'dl.list');
