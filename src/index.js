@@ -1,4 +1,5 @@
 import {json} from './lib/supabase.js';
+import {productSlug, productPage} from './lib/storyblok.js';
 import {enquiriesCreate} from './api/enquiries.js';
 import {adminOverview} from './api/adminOverview.js';
 import {adminProjectsUpdate} from './api/adminProjects.js';
@@ -98,6 +99,9 @@ export default {
         return json({error: error.message}, {status: 500});
       }
     }
+
+    const slug = productSlug(url);
+    if (slug) return productPage(request, env, slug);
 
     return env.ASSETS.fetch(request);
   }
