@@ -58,7 +58,7 @@ const H2_SPLIT = 'font-size:clamp(28px,3cqi,38px);color:var(--deep);margin-top:1
 
 function secHead(b) {
   if (!str(b.eyebrow) && !str(b.heading)) return '';
-  const side = str(b.link_label) && linkUrl(b.link) ? `<a class="arrow"${href(b.link)}>${fmt(b.link_label)}</a>` : '';
+  const side = str(b.link_label) ? `<a class="arrow"${href(b.link)}>${fmt(b.link_label)}</a>` : '';
   return `<div class="sec-head"><div><span class="eyebrow">${fmt(b.eyebrow)}</span><h2>${fmt(b.heading)}</h2></div>` +
     (str(b.intro) ? `<p>${fmt(b.intro)}</p>` : '') + side + '</div>';
 }
