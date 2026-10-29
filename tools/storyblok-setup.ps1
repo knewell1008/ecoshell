@@ -2,7 +2,8 @@
 # - creates or updates every block in tools/storyblok-blocks.json (Page sections, Product, ...)
 # - uploads the site photos and video the pages use, if they are not in Storyblok's assets yet
 # - creates a Product story per product page, filled with the current site copy
-# - creates a Page story per page in tools/storyblok-pages.json (made by tools/storyblok-extract.js)
+# - creates a Page story per page in tools/storyblok-pages.json (made by tools/storyblok-extract.js, plus the 404 page)
+# - creates the Site settings story (menu, footer, logo, colours) from src/lib/site-defaults.json
 # - on existing stories, fills only fields that are still empty; edited stories are left alone
 #   (the one exception: Storyblok's sample Home story is replaced with the real home page)
 # - points the Visual Editor at the live site
@@ -148,6 +149,7 @@ $products = [ordered]@{
   bioshape = @('Ecoshell Bioshape', 'Compostable grade for injection-moulded items.', @('Cutlery', 'Plant pots', 'Single-use service items'), 'comp', 'pellets')
   shield = @('Ecoshell Shield', 'Bio-calcium masterbatch designed to protect the plastic article itself from bacterial growth.', @('Food-service trays (article protection)', 'Shower and bath products', 'Storage containers', 'Handles and touch surfaces'), 'std', 'crate')
 }
+$Platforms = @{core = 'core'; flow = 'core'; expand = 'core'; mold = 'core'; complete = 'core'; bioflex = 'compostable'; bioform = 'compostable'; bioshape = 'compostable'; shield = 'antibacterial'}
 function Rows($kind) {
   $comp = $kind -eq 'comp'
   @(
@@ -164,7 +166,7 @@ foreach ($slug in $products.Keys) {
   $summary = $stories | Where-Object { $_.full_slug -eq "products/$slug" }
   if (-not $summary) {
     $content = @{
-      component = 'product'; name = $p[0]; summary = $p[1]; description = $p[1]; details = ''; hero_image = $photo
+      component = 'product'; name = $p[0]; summary = $p[1]; description = $p[1]; details = ''; hero_image = $photo; platform = $Platforms[$slug]
       applications = @($p[2] | ForEach-Object { @{_uid = (Uid); component = 'application'; title = $_; description = ''} })
       properties = @(Rows $p[3])
     }
@@ -182,6 +184,10 @@ foreach ($slug in $products.Keys) {
   if (-not ($c.hero_image -and $c.hero_image.filename)) {
     $c | Add-Member -NotePropertyName hero_image -NotePropertyValue $photo -Force
     $filled += "Hero image ($($p[4]).jpg)"
+  }
+  if (-not $c.platform) {
+    $c | Add-Member -NotePropertyName platform -NotePropertyValue $Platforms[$slug] -Force
+    $filled += "Platform ($($Platforms[$slug]))"
   }
   if (-not $filled) { Write-Host "products/$slug is up to date"; continue }
   Call 'PUT' "/stories/$($summary.id)" @{story = @{content = $c}; publish = 1} | Out-Null
@@ -216,6 +222,17 @@ foreach ($pg in (ReadJson 'tools\storyblok-pages.json')) {
   if ($pg.slug -eq 'home') { $story.path = '/' }
   Call 'POST' '/stories' @{story = $story; publish = 1} | Out-Null
   Write-Host "Created and published $($pg.slug)"
+}
+
+# ---------- Site settings (menu, footer, logo, design) from src/lib/site-defaults.json ----------
+if ($stories | Where-Object { -not $_.is_folder -and $_.full_slug -eq 'settings' }) {
+  Write-Host 'settings already exists, leaving it'
+} else {
+  $d = ReadJson 'src\lib\site-defaults.json'
+  $d.PSObject.Properties.Remove('_note')
+  # Previews on the home page, so editors see the menu and footer they are changing.
+  Call 'POST' '/stories' @{story = @{name = 'Site settings'; slug = 'settings'; path = '/'; content = (Prepare $d $null)}; publish = 1} | Out-Null
+  Write-Host 'Created and published Site settings'
 }
 
 # ---------- Visual Editor preview address ----------

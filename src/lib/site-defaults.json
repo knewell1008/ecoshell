@@ -1,0 +1,105 @@
+{
+  "_note": "Default Site settings: the menu, footer, logo and design as built by site-src/. The Worker uses these when the Storyblok 'settings' story is missing or a field is empty, and tools/storyblok-setup.ps1 seeds the story from this file. {\"_file\": ...} is a site file; links are paths.",
+  "component": "settings",
+  "logo": {"_file": "assets/img/logo/ecoshell-logo.png", "alt": "Ecoshell"},
+  "logo_on_dark": {"_file": "assets/img/logo/ecoshell-logo-white.png", "alt": "Ecoshell"},
+  "favicon": {"_file": "assets/img/favicon/android-chrome-512x512.png"},
+  "tagline": "Bio-calcium from eggshells",
+  "rail": [
+    {"component": "rail_item", "label": "Home", "icon": "home", "link": "/"},
+    {"component": "rail_item", "label": "Products & Services", "icon": "products", "highlight": "/products/", "groups": [
+      {"component": "menu_group", "heading": "Overview", "links": [
+        {"component": "menu_link", "label": "All products and services", "link": "/products/"}]},
+      {"component": "menu_group", "heading": "By platform", "links": [
+        {"component": "menu_link", "label": "Core masterbatches", "link": "/products/core-masterbatches", "sublinks": [
+          {"component": "menu_link", "label": "Core", "link": "/products/core"},
+          {"component": "menu_link", "label": "Flow", "link": "/products/flow"},
+          {"component": "menu_link", "label": "Expand", "link": "/products/expand"},
+          {"component": "menu_link", "label": "Mold", "link": "/products/mold"},
+          {"component": "menu_link", "label": "Complete", "link": "/products/complete"},
+          {"component": "menu_link", "label": "Custom", "link": "/products/custom-masterbatch"}]},
+        {"component": "menu_link", "label": "Compostable platform", "link": "/products/compostable", "sublinks": [
+          {"component": "menu_link", "label": "Bioflex", "link": "/products/bioflex"},
+          {"component": "menu_link", "label": "Bioform", "link": "/products/bioform"},
+          {"component": "menu_link", "label": "Bioshape", "link": "/products/bioshape"}]},
+        {"component": "menu_link", "label": "Antibacterial platform", "link": "/products/antibacterial", "sublinks": [
+          {"component": "menu_link", "label": "Shield", "link": "/products/shield"},
+          {"component": "menu_link", "label": "Custom", "link": "/products/antibacterial-custom"}]}]},
+      {"component": "menu_group", "heading": "Finished products", "links": [
+        {"component": "menu_link", "label": "Ecoshell products", "link": "/products/ecoshell-products", "sublinks": [
+          {"component": "menu_link", "label": "Shower liners", "link": "/products/ecoshell-products#liners"},
+          {"component": "menu_link", "label": "Bags and films", "link": "/products/ecoshell-products#bags"},
+          {"component": "menu_link", "label": "Cutlery", "link": "/products/ecoshell-products#cutlery"}]}]},
+      {"component": "menu_group", "heading": "By service", "links": [
+        {"component": "menu_link", "label": "OEM services", "link": "/products/oem"}]}]},
+    {"component": "rail_item", "label": "Sustain­ability", "panel_title": "Sustainability", "icon": "sustainability", "highlight": "/sustainability", "groups": [
+      {"component": "menu_group", "heading": "Our approach", "links": [
+        {"component": "menu_link", "label": "General stance", "link": "/sustainability"},
+        {"component": "menu_link", "label": "Plastic reduction and LCA", "link": "/sustainability#lca"}]},
+      {"component": "menu_group", "heading": "Meet your targets", "links": [
+        {"component": "menu_link", "label": "How to use Ecoshell", "link": "/sustainability#targets"},
+        {"component": "menu_link", "label": "EPR example solutions", "link": "/sustainability#epr"}]}]},
+    {"component": "rail_item", "label": "Insights & Resources", "icon": "resources", "highlight": "/resources", "groups": [
+      {"component": "menu_group", "heading": "Insights", "links": [
+        {"component": "menu_link", "label": "Articles and news", "link": "/company/#news"}]},
+      {"component": "menu_group", "heading": "Downloads", "links": [
+        {"component": "menu_link", "label": "Tech downloads", "link": "/resources"},
+        {"component": "menu_link", "label": "Position papers", "link": "/resources"},
+        {"component": "menu_link", "label": "Product lists", "link": "/resources"}]},
+      {"component": "menu_group", "heading": "For your team", "links": [
+        {"component": "menu_link", "label": "Custom marketing one-pagers", "link": "/resources#onepager"}]}]},
+    {"component": "rail_item", "label": "Company", "icon": "company", "highlight": "/company/", "groups": [
+      {"component": "menu_group", "heading": "About", "links": [
+        {"component": "menu_link", "label": "About Ecoshell", "link": "/company/"},
+        {"component": "menu_link", "label": "Capabilities", "link": "/company/#capabilities"},
+        {"component": "menu_link", "label": "News", "link": "/company/#news"}]},
+      {"component": "menu_group", "heading": "People", "links": [
+        {"component": "menu_link", "label": "Team", "link": "/company/team"},
+        {"component": "menu_link", "label": "Job opportunities", "link": "/company/careers"}]},
+      {"component": "menu_group", "heading": "Working together", "links": [
+        {"component": "menu_link", "label": "Collaboration", "link": "/company/collaboration"},
+        {"component": "menu_link", "label": "Corporate responsibility", "link": "/company/responsibility"}]}]},
+    {"component": "rail_item", "label": "Contact Us", "phone_label": "Contact us", "icon": "contact", "link": "/contact", "divider": true, "highlight": "/contact"},
+    {"component": "rail_item", "label": "Portal", "icon": "portal", "link": "/portal", "highlight": "/portal"}
+  ],
+  "footer_text": "Eggshell-derived materials for plastic reduction. Member of the PREVENT Waste Alliance.",
+  "footer_columns": [
+    {"component": "footer_column", "heading": "Products", "links": [
+      {"component": "menu_link", "label": "Core masterbatches", "link": "/products/core-masterbatches"},
+      {"component": "menu_link", "label": "Compostable platform", "link": "/products/compostable"},
+      {"component": "menu_link", "label": "Antibacterial platform", "link": "/products/antibacterial"},
+      {"component": "menu_link", "label": "Ecoshell products", "link": "/products/ecoshell-products"},
+      {"component": "menu_link", "label": "OEM services", "link": "/products/oem"}]},
+    {"component": "footer_column", "heading": "Sustainability", "links": [
+      {"component": "menu_link", "label": "Our approach", "link": "/sustainability"},
+      {"component": "menu_link", "label": "LCA and reduction", "link": "/sustainability#lca"},
+      {"component": "menu_link", "label": "EPR solutions", "link": "/sustainability#epr"}]},
+    {"component": "footer_column", "heading": "Company", "links": [
+      {"component": "menu_link", "label": "About", "link": "/company/"},
+      {"component": "menu_link", "label": "Team", "link": "/company/team"},
+      {"component": "menu_link", "label": "Collaboration", "link": "/company/collaboration"},
+      {"component": "menu_link", "label": "Careers", "link": "/company/careers"},
+      {"component": "menu_link", "label": "Corporate responsibility", "link": "/company/responsibility"}]},
+    {"component": "footer_column", "heading": "Contact", "links": [
+      {"component": "menu_link", "label": "General inquiries", "link": "/contact?type=General"},
+      {"component": "menu_link", "label": "Sales", "link": "/contact?type=Sales"},
+      {"component": "menu_link", "label": "Co-development", "link": "/contact?type=Co-development"},
+      {"component": "menu_link", "label": "Press", "link": "/contact?type=Press"},
+      {"component": "menu_link", "label": "Resources", "link": "/resources"}]}
+  ],
+  "copyright": "Ecoshell LLC",
+  "legal_links": [
+    {"component": "menu_link", "label": "Privacy"},
+    {"component": "menu_link", "label": "Terms of use"}
+  ],
+  "color_deep": "#1A3629",
+  "color_ink": "#10201A",
+  "color_green": "#5FA974",
+  "color_green_lift": "#7FC492",
+  "color_lime": "#7DC242",
+  "color_eggshell": "#F6F2E9",
+  "color_mist": "#F1F4F1",
+  "color_stone": "#5E6D64",
+  "color_line": "#DCE3DD",
+  "spacing": "standard"
+}

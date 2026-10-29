@@ -1,5 +1,5 @@
 import {json} from './lib/supabase.js';
-import {productSlug, productPage, pageSlug, contentPage} from './lib/storyblok.js';
+import {pageSlug, sitePage} from './lib/storyblok.js';
 import {enquiriesCreate} from './api/enquiries.js';
 import {adminOverview} from './api/adminOverview.js';
 import {adminProjectsUpdate} from './api/adminProjects.js';
@@ -100,10 +100,8 @@ export default {
       }
     }
 
-    const product = productSlug(url);
-    if (product) return productPage(request, env, product);
     const page = pageSlug(url);
-    if (page) return contentPage(request, env, page);
+    if (page) return sitePage(request, env, page);
 
     return env.ASSETS.fetch(request);
   }

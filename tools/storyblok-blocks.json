@@ -240,6 +240,53 @@
       "file": {"type": "asset", "description": "The PDF. Empty sends people to the contact form"}
     }},
 
+    {"name": "settings", "display_name": "Site settings", "is_root": true, "is_nestable": false, "schema": {
+      "logo": {"type": "asset", "filetypes": ["images"], "description": "Top bar logo, on white"},
+      "logo_on_dark": {"type": "asset", "filetypes": ["images"], "description": "Footer logo, on dark green"},
+      "favicon": {"type": "asset", "filetypes": ["images"], "description": "Browser tab icon: a square PNG, at least 180 x 180 px"},
+      "tagline": {"type": "text", "max_length": 40, "description": "Short line beside the logo in the top bar"},
+      "rail": {"type": "bloks", "restrict_components": true, "component_whitelist": ["rail_item"], "description": "The main menu, top to bottom. A button with menu groups opens a slide-out menu; one with a link goes straight there."},
+      "footer_text": {"type": "textarea", "max_length": 200, "description": "Line under the footer logo"},
+      "footer_columns": {"type": "bloks", "restrict_components": true, "component_whitelist": ["footer_column"], "maximum": 5},
+      "copyright": {"type": "text", "description": "Shown after the year, e.g. Ecoshell LLC"},
+      "legal_links": {"type": "bloks", "restrict_components": true, "component_whitelist": ["menu_link"], "description": "Small links at the bottom, e.g. Privacy. Without a link they show as plain text."},
+      "color_deep": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Deep green: dark sections, headings. A hex colour like #1A3629"},
+      "color_ink": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Ink: body text"},
+      "color_green": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Green: labels and accents"},
+      "color_green_lift": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Light green: icons and accents on dark"},
+      "color_lime": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Lime: buttons on dark backgrounds"},
+      "color_eggshell": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Eggshell background"},
+      "color_mist": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Mist background"},
+      "color_stone": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Stone: small grey text"},
+      "color_line": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Lines and borders"},
+      "spacing": {"type": "option", "options": [{"name": "Compact", "value": "compact"}, {"name": "Standard", "value": "standard"}, {"name": "Roomy", "value": "roomy"}], "default_value": "standard", "description": "Space above and below each section"},
+      "heading_font": {"type": "asset", "description": "Optional font file (WOFF2) to replace Jost in headings and buttons. Empty keeps Jost."},
+      "body_font": {"type": "asset", "description": "Optional font file (WOFF2) to replace Source Sans 3 in body text. Empty keeps Source Sans 3."}
+    }},
+    {"name": "rail_item", "display_name": "Menu button", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "required": true, "max_length": 30},
+      "icon": {"type": "option", "options": [{"name": "Home (egg)", "value": "home"}, {"name": "Products", "value": "products"}, {"name": "Sustainability", "value": "sustainability"}, {"name": "Resources", "value": "resources"}, {"name": "Company", "value": "company"}, {"name": "Contact", "value": "contact"}, {"name": "Portal", "value": "portal"}, {"name": "Document", "value": "doc"}]},
+      "link": {"type": "multilink", "description": "Where the button goes, if it has no menu groups"},
+      "groups": {"type": "bloks", "restrict_components": true, "component_whitelist": ["menu_group"], "description": "Slide-out menu sections"},
+      "panel_title": {"type": "text", "description": "Slide-out menu heading; empty uses the label"},
+      "phone_label": {"type": "text", "description": "Label in the phone menu, if different"},
+      "highlight": {"type": "text", "description": "Light this button up on pages under this address, e.g. /products/"},
+      "divider": {"type": "boolean", "description": "Line above this button"}
+    }},
+    {"name": "menu_group", "display_name": "Menu group", "is_root": false, "is_nestable": true, "schema": {
+      "heading": {"type": "text"},
+      "links": {"type": "bloks", "restrict_components": true, "component_whitelist": ["menu_link"]}
+    }},
+    {"name": "menu_link", "display_name": "Link", "is_root": false, "is_nestable": true, "schema": {
+      "label": {"type": "text", "required": true},
+      "link": {"type": "multilink"},
+      "sublinks": {"type": "bloks", "restrict_components": true, "component_whitelist": ["menu_link"], "description": "Optional links that fold out under this one (menus only)"}
+    }},
+    {"name": "footer_column", "display_name": "Footer column", "is_root": false, "is_nestable": true, "schema": {
+      "heading": {"type": "text"},
+      "links": {"type": "bloks", "restrict_components": true, "component_whitelist": ["menu_link"]}
+    }},
+
     {"name": "product", "display_name": "Product", "is_root": true, "is_nestable": false, "schema": {
       "name": {"type": "text", "required": true, "max_length": 40, "description": "Full product name, e.g. Ecoshell Core"},
       "summary": {"type": "textarea", "required": true, "max_length": 220, "description": "One or two sentences shown under the product name at the top of the page."},
@@ -247,7 +294,15 @@
       "details": {"type": "textarea", "max_length": 900, "description": "Follows the Description: what makes this grade different, the problem it solves, processing window, let-down ratio. Leave a blank line between paragraphs."},
       "hero_image": {"type": "asset", "filetypes": ["images"], "description": "Wide photo at the top of the page, at least 1200 px across. Remove it to fall back to the built-in photo."},
       "applications": {"type": "bloks", "restrict_components": true, "component_whitelist": ["application"], "description": "Cards in the Applications section"},
-      "properties": {"type": "bloks", "restrict_components": true, "component_whitelist": ["property"], "description": "Rows in the Typical properties table"}
+      "properties": {"type": "bloks", "restrict_components": true, "component_whitelist": ["property"], "description": "Rows in the Typical properties table"},
+      "platform": {"type": "option", "options": [{"name": "Core masterbatches", "value": "core"}, {"name": "Compostable platform", "value": "compostable"}, {"name": "Antibacterial platform", "value": "antibacterial"}], "default_value": "core", "description": "Sets the breadcrumb, label and the default note and certificates"},
+      "note": {"type": "textarea", "description": "Compliance note in the Description section. Empty uses the platform's standard note (compostable and antibacterial)."},
+      "certifications": {"type": "bloks", "restrict_components": true, "component_whitelist": ["badge"], "description": "Badges in Certifications. Empty shows the platform's standard badges."},
+      "tds_file": {"type": "asset", "description": "Technical data sheet PDF. Empty sends people to the inquiry form."},
+      "tds_version": {"type": "text", "description": "e.g. v1.2, March 2027"},
+      "sds_file": {"type": "asset", "description": "Safety data sheet PDF"},
+      "sds_version": {"type": "text"},
+      "guide_file": {"type": "asset", "description": "Processing guide PDF"}
     }},
     {"name": "application", "display_name": "Application", "is_root": false, "is_nestable": true, "schema": {
       "title": {"type": "text", "required": true, "max_length": 60, "description": "Short name, e.g. \"Caps and closures\""},

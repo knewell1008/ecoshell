@@ -7,8 +7,8 @@
 //   {text}  shows as a review flag, e.g. {Proof}; {} alone shows "Confirm"
 //   a blank line starts a new paragraph in long text fields
 
-const str = (v) => String(v ?? '').trim();
-const esc = (v) => str(v).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+export const str = (v) => String(v ?? '').trim();
+export const esc = (v) => str(v).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
 
 export function fmt(v, {placeholders = true} = {}) {
   let s = esc(v);
@@ -38,8 +38,9 @@ export function linkUrl(l) {
 const href = (l) => (linkUrl(l) ? ` href="${attr(linkUrl(l))}"` : '');
 
 // Storyblok asset URLs carry the size (/f/<space>/<w>x<h>/...); only shrink, never upscale.
+// Also takes {_file: "assets/..."}, a file on the site itself (the built-in defaults use these).
 export function assetUrl(a, maxWidth = 1600) {
-  const f = typeof a === 'string' ? a : a?.filename;
+  const f = typeof a === 'string' ? a : a?.filename || (a?._file ? '/' + a._file : '');
   if (!f) return '';
   if (!/\/\/a\.storyblok\.com\//.test(f) || /\.(mp4|webm|mov|pdf)$/i.test(f)) return f;
   const w = Number(/\/(\d+)x\d+\//.exec(f)?.[1] || 0);
