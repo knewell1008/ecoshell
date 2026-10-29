@@ -47,6 +47,22 @@ function ReadJson($rel) { Get-Content -Raw -Encoding UTF8 (Join-Path $Root $rel)
 # ---------- blocks ----------
 $defs = ReadJson 'tools\storyblok-blocks.json'
 $existing = (Call 'GET' '/components' $null).components
+
+# Block library folders, created once and matched by name.
+$groupIds = @{}
+$known = (Call 'GET' '/component_groups' $null).component_groups
+foreach ($g in $defs.groups.PSObject.Properties) {
+  $found = $known | Where-Object { $_.name -eq $g.Name }
+  if (-not $found) { $found = (Call 'POST' '/component_groups' @{component_group = @{name = $g.Name}}).component_group; Write-Host "Created block folder '$($g.Name)'" }
+  $members = if ($g.Value -eq '@sections') { @($defs.sections) } else { @($g.Value) }
+  foreach ($m in $members) { $groupIds[$m] = $found.uuid }
+}
+# A stable key per tab, so re-running updates the tab instead of adding another.
+function TabKey($text) {
+  $hash = [Security.Cryptography.MD5]::Create().ComputeHash([Text.Encoding]::UTF8.GetBytes($text))
+  'tab-' + ([guid]::new($hash)).ToString()
+}
+
 foreach ($c in $defs.components) {
   $schema = [ordered]@{}
   $pos = 0
@@ -59,7 +75,17 @@ foreach ($c in $defs.components) {
     $schema[$f.Name] = $field
     $pos++
   }
+  # Tabs: fields listed for a tab leave the main (Content) tab.
+  $tabs = $defs.tabs.($c.name)
+  if ($tabs) {
+    foreach ($t in $tabs.PSObject.Properties) {
+      $keys = @($t.Value | Where-Object { $schema.Contains($_) })
+      if ($keys.Count) { $schema[(TabKey "$($c.name)/$($t.Name)")] = @{type = 'tab'; display_name = $t.Name; keys = $keys; pos = $pos}; $pos++ }
+    }
+  }
   $component = @{name = $c.name; display_name = $c.display_name; is_root = $c.is_root; is_nestable = $c.is_nestable; schema = $schema}
+  if ($defs.preview.($c.name)) { $component.preview_field = $defs.preview.($c.name) }
+  if ($groupIds[$c.name]) { $component.component_group_uuid = $groupIds[$c.name] }
   $old = $existing | Where-Object { $_.name -eq $c.name }
   if ($old) {
     Call 'PUT' "/components/$($old.id)" @{component = $component} | Out-Null
@@ -68,6 +94,16 @@ foreach ($c in $defs.components) {
     Call 'POST' '/components' @{component = $component} | Out-Null
     Write-Host "Created block '$($c.name)'"
   }
+}
+
+# Storyblok's starter blocks, unused here: removed so editors cannot pick them. Kept if any story still uses one.
+foreach ($name in @($defs.remove)) {
+  $old = $existing | Where-Object { $_.name -eq $name }
+  if (-not $old) { continue }
+  $users = (Call 'GET' "/stories?contain_component=$name&per_page=5" $null).stories
+  if (@($users).Count) { Write-Host "Kept block '$name': still used by $(@($users | ForEach-Object { $_.full_slug }) -join ', ')"; continue }
+  Call 'DELETE' "/components/$($old.id)" $null | Out-Null
+  Write-Host "Removed unused sample block '$name'"
 }
 
 # ---------- photos and video ----------
@@ -236,6 +272,26 @@ foreach ($a in (ReadJson 'tools\storyblok-articles.json')) {
   if ($a.publish) { $req.publish = 1 }
   Call 'POST' '/stories' $req | Out-Null
   Write-Host "Created news/$($a.slug)$(if ($a.publish) {' and published it'} else {' as a draft'})"
+}
+
+# ---------- folder default content types (tools/storyblok-blocks.json "folders") ----------
+foreach ($f in $defs.folders.PSObject.Properties) {
+  $folder = $stories | Where-Object { $_.is_folder -and $_.slug -eq $f.Name }
+  if (-not $folder) { continue }
+  $story = (Call 'GET' "/stories/$($folder.id)" $null).story
+  if ($story.default_root -eq $f.Value) { continue }
+  Call 'PUT' "/stories/$($folder.id)" @{story = @{default_root = $f.Value}} | Out-Null
+  Write-Host "Folder $($f.Name): new stories are $($f.Value)s by default"
+}
+
+# ---------- templates (tools/storyblok-templates.json): drafts to duplicate, never published ----------
+foreach ($t in (ReadJson 'tools\storyblok-templates.json')) {
+  $full = if ($t.folder) { "$($t.folder)/$($t.slug)" } else { $t.slug }
+  if ($stories | Where-Object { $_.full_slug -eq $full }) { Write-Host "$full already exists, leaving it"; continue }
+  $story = @{name = $t.name; slug = $t.slug; content = (Prepare $t.content $null)}
+  if ($t.folder) { $story.parent_id = (FolderFor $t.folder).id }
+  Call 'POST' '/stories' @{story = $story} | Out-Null
+  Write-Host "Created template $full (draft)"
 }
 
 # ---------- Site settings (menu, footer, logo, design) from src/lib/site-defaults.json ----------

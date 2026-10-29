@@ -1,0 +1,26 @@
+[
+  {"folder": "", "slug": "template-simple-page", "name": "TEMPLATE - Simple page",
+   "content": {"component": "page", "title": "[Page title]", "description": "[One or two sentences for search results]", "body": [
+     {"component": "hero", "crumbs": [{"component": "crumb", "label": "Home", "link": "/"}, {"component": "crumb", "label": "[Page name]"}],
+      "eyebrow": "[Section]", "title": "[Page title]", "subtitle": "[One or two sentences on what this page is about.]", "image": {"_file": "assets/img/site/pellets.jpg"}},
+     {"component": "text_split", "eyebrow": "[Topic]", "heading": "[Heading]", "lead": "[Opening paragraph, in a larger size.]", "body": "[More text. Leave a blank line between paragraphs.]"},
+     {"component": "cta", "heading": "[Call to action heading]", "text": "[One line on what to do next.]"}]}},
+  {"folder": "", "slug": "template-legal-page", "name": "TEMPLATE - Legal page",
+   "content": {"component": "page", "title": "[Privacy policy]", "description": "[How Ecoshell handles personal data.]", "body": [
+     {"component": "hero", "crumbs": [{"component": "crumb", "label": "Home", "link": "/"}, {"component": "crumb", "label": "[Privacy policy]"}],
+      "eyebrow": "Legal", "title": "[Privacy policy]", "subtitle": "Last updated [date].", "image": {"_file": "assets/img/site/process.jpg"}},
+     {"component": "text_split", "eyebrow": "[1]", "heading": "[Section heading]", "body": "[Section text. Leave a blank line between paragraphs.]"},
+     {"component": "text_split", "eyebrow": "[2]", "heading": "[Section heading]", "body": "[Section text.]"},
+     {"component": "text_split", "eyebrow": "Contact", "heading": "Questions about this policy", "body": "[Who to contact and how.]"}]}},
+  {"folder": "news", "slug": "template-news-article", "name": "TEMPLATE - News article",
+   "content": {"component": "article", "title": "[Headline]", "date": "", "category": "[Category, e.g. Product]", "image": {"_file": "assets/img/site/process.jpg"},
+     "summary": "[One or two sentences: what happened and why it matters.]",
+     "body": {"type": "doc", "content": [
+       {"type": "paragraph", "content": [{"type": "text", "text": "[Opening paragraph: who, what, when.]"}]},
+       {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "[Sub-heading]"}]},
+       {"type": "paragraph", "content": [{"type": "text", "text": "[More detail.]"}]}]}}},
+  {"folder": "products", "slug": "template-product", "name": "TEMPLATE - Product",
+   "content": {"component": "product", "name": "[Ecoshell Name]", "platform": "core", "summary": "[One or two sentences shown under the product name.]",
+     "description": "[Opening paragraph of the Description section.]", "details": "", "hero_image": {"_file": "assets/img/site/pellets.jpg"},
+     "applications": [{"component": "application", "title": "[Application]", "description": ""}, {"component": "application", "title": "[Application]", "description": ""}, {"component": "application", "title": "[Application]", "description": ""}]}}
+]

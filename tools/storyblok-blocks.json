@@ -1,6 +1,51 @@
 {
   "_note": "Storyblok block definitions, loaded by tools/storyblok-setup.ps1 (field order sets the order editors see). Rendering: src/lib/blocks.js (Page blocks) and src/lib/storyblok.js (Product).",
   "sections": ["hero", "home_hero", "text_split", "image_split", "cards", "steps", "chips", "table", "stats", "badges", "industries", "logos", "definition_list", "people", "downloads", "news_list", "cta", "inquiry_form", "contact_form"],
+  "_editor_note": "groups: block library folders. preview: the field shown as an item's name in lists. tabs: fields moved off the main tab, so editors see words and pictures first.",
+  "groups": {
+    "Content types": ["page", "article", "product", "settings"],
+    "Page sections": "@sections",
+    "Section items": ["crumb", "button", "slide", "benefit_column", "list_item", "card", "step", "chip_group", "table_row", "stat", "badge", "person", "select_field", "download_group", "download", "application", "property"],
+    "Menu and footer": ["rail_item", "menu_group", "menu_link", "footer_column", "redirect"]
+  },
+  "preview": {
+    "hero": "title", "home_hero": "", "text_split": "heading", "image_split": "heading", "cards": "heading", "steps": "heading", "table": "heading",
+    "stats": "heading", "badges": "heading", "industries": "heading", "logos": "heading", "definition_list": "heading", "people": "heading",
+    "downloads": "heading", "news_list": "heading", "cta": "heading", "inquiry_form": "form_title",
+    "crumb": "label", "button": "label", "slide": "heading", "benefit_column": "heading", "list_item": "term", "card": "title", "step": "title",
+    "chip_group": "heading", "table_row": "label", "stat": "value", "badge": "title", "person": "name", "select_field": "label",
+    "download_group": "eyebrow", "download": "title", "application": "title", "property": "label",
+    "rail_item": "label", "menu_group": "heading", "menu_link": "label", "footer_column": "heading", "redirect": "from"
+  },
+  "tabs": {
+    "page": {"Search": ["description"]},
+    "hero": {"Layout": ["dark"]},
+    "text_split": {"Layout": ["large_heading", "centered", "background", "anchor"]},
+    "image_split": {"Layout": ["background", "anchor"]},
+    "cards": {"Layout": ["columns", "small_titles", "background", "anchor"]},
+    "steps": {"Layout": ["background", "anchor"]},
+    "chips": {"Layout": ["background", "anchor"]},
+    "table": {"Layout": ["compare", "background", "anchor"]},
+    "stats": {"Layout": ["background", "anchor"]},
+    "badges": {"Layout": ["background", "anchor"]},
+    "industries": {"Layout": ["background", "anchor"]},
+    "logos": {"Layout": ["anchor"]},
+    "definition_list": {"Layout": ["background", "anchor"]},
+    "people": {"Layout": ["background", "anchor"]},
+    "downloads": {"Layout": ["background", "anchor"]},
+    "news_list": {"Layout": ["columns", "category", "background", "anchor"]},
+    "cta": {"Layout": ["anchor"]},
+    "inquiry_form": {"Intro column": ["eyebrow", "heading", "text", "items", "form_note"], "Layout": ["background", "anchor"]},
+    "contact_form": {"Layout": ["background", "anchor"]},
+    "slide": {"Data panel": ["readout_title", "readout"]},
+    "rail_item": {"Advanced": ["panel_title", "phone_label", "highlight", "divider"]},
+    "product": {"Compliance and downloads": ["platform", "note", "certifications", "tds_file", "tds_version", "sds_file", "sds_version", "guide_file"]},
+    "settings": {"Menu": ["rail"], "Footer": ["footer_text", "footer_columns", "copyright", "legal_links"],
+      "Design": ["color_deep", "color_ink", "color_green", "color_green_lift", "color_lime", "color_eggshell", "color_mist", "color_stone", "color_line", "spacing", "heading_font", "body_font"],
+      "Redirects": ["redirects"]}
+  },
+  "folders": {"products": "product", "news": "article", "company": "page", "insights-resources": "page"},
+  "remove": ["teaser", "grid", "feature"],
   "components": [
     {"name": "page", "display_name": "Page", "is_root": true, "is_nestable": false, "schema": {
       "title": {"type": "text", "required": true, "max_length": 70, "description": "Shown in the browser tab and search results"},

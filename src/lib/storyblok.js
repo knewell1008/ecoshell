@@ -51,8 +51,10 @@ async function fetchArticles(token, draft) {
   if (draft) q.set('cv', String(Date.now()));
   const res = await fetch(API.replace(/\/$/, '') + '?' + q, draft ? {} : {cf: {cacheTtl: 60, cacheEverything: true}});
   if (!res.ok) return [];
-  return (await res.json()).stories || [];
+  return ((await res.json()).stories || []).filter((s) => !isTemplate(s));
 }
+
+const isTemplate = (story) => /(^|\/)template-/.test(story?.full_slug || '');
 
 // A story we can render: a Page with at least one of our blocks (not e.g. Storyblok's sample), or a Product.
 function usable(story) {
@@ -116,6 +118,8 @@ export async function sitePage(request, env, slug) {
   } catch (error) {
     return isStatic ? tagged(page, `static; ${error.message}`.slice(0, 200)) : page;
   }
+  // Templates ("template-..." stories, to duplicate) are only ever shown in the Visual Editor.
+  if (!draft && isTemplate(story)) story = null;
 
   // Redirects from Site settings, for pages that moved. A page that exists at the address wins.
   if (!usable(story)) {
