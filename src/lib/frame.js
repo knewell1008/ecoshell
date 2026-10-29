@@ -45,13 +45,14 @@ function mark(s, onDark = false) {
 }
 const lnk = (x, cls = '') => `<a${cls ? ` class="${cls}"` : ''}${href(x.link)}>${esc(x.label)}</a>`;
 
-// Which rail button lights up: the item whose "highlight" address the current path starts with.
+// Which rail button lights up: the item with a "highlight" address (comma-separate several) that the current path is under.
 function current(rail, path) {
   if (path === '/') return rail.findIndex((r) => r.icon === 'home');
   let best = -1, len = 0;
   rail.forEach((r, i) => {
-    const h = str(r.highlight);
-    if (h && h !== '/' && (path === h || path.startsWith(h.endsWith('/') ? h : h + '/') || path.replace(/\/$/, '') === h.replace(/\/$/, '')) && h.length > len) { best = i; len = h.length; }
+    for (const h of str(r.highlight).split(',').map(str)) {
+      if (h && h !== '/' && (path === h || path.startsWith(h.endsWith('/') ? h : h + '/') || path.replace(/\/$/, '') === h.replace(/\/$/, '')) && h.length > len) { best = i; len = h.length; }
+    }
   });
   return best;
 }

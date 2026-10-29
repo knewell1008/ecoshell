@@ -1,0 +1,13 @@
+[
+  {"slug": "ecoshell-joins-prevent-waste-alliance", "name": "Ecoshell joins the PREVENT Waste Alliance", "publish": false,
+   "content": {"component": "article", "title": "Ecoshell joins the PREVENT Waste Alliance", "date": "", "category": "Partnership",
+     "image": {"_file": "assets/img/site/crate.jpg"},
+     "summary": "[One sentence on what joining the alliance means for Ecoshell and its customers.]",
+     "body": {"type": "doc", "content": [
+       {"type": "paragraph", "content": [{"type": "text", "text": "[Opening paragraph: when Ecoshell joined, and what the PREVENT Waste Alliance is.]"}]},
+       {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "Why we joined"}]},
+       {"type": "paragraph", "content": [{"type": "text", "text": "[Two or three sentences on why the alliance matters for eggshell-derived materials and plastic reduction.]"}]},
+       {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "What comes next"}]},
+       {"type": "paragraph", "content": [{"type": "text", "text": "[Working groups, projects or events Ecoshell will take part in.]"}]}
+     ]}}}
+]

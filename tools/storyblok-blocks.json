@@ -1,6 +1,6 @@
 {
   "_note": "Storyblok block definitions, loaded by tools/storyblok-setup.ps1 (field order sets the order editors see). Rendering: src/lib/blocks.js (Page blocks) and src/lib/storyblok.js (Product).",
-  "sections": ["hero", "home_hero", "text_split", "image_split", "cards", "steps", "chips", "table", "stats", "badges", "industries", "logos", "definition_list", "people", "downloads", "cta", "inquiry_form", "contact_form"],
+  "sections": ["hero", "home_hero", "text_split", "image_split", "cards", "steps", "chips", "table", "stats", "badges", "industries", "logos", "definition_list", "people", "downloads", "news_list", "cta", "inquiry_form", "contact_form"],
   "components": [
     {"name": "page", "display_name": "Page", "is_root": true, "is_nestable": false, "schema": {
       "title": {"type": "text", "required": true, "max_length": 70, "description": "Shown in the browser tab and search results"},
@@ -141,6 +141,18 @@
       "background": "@background",
       "anchor": "@anchor"
     }},
+    {"name": "news_list", "display_name": "Latest news", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "count": {"type": "number", "description": "How many articles to show, newest first. 0 shows them all"},
+      "category": {"type": "text", "description": "Optional: only articles with this category, e.g. Product"},
+      "link_label": {"type": "text", "description": "Optional link beside the heading, e.g. All news"},
+      "link": {"type": "multilink"},
+      "columns": {"type": "option", "options": [{"name": "2", "value": "2"}, {"name": "3", "value": "3"}, {"name": "4", "value": "4"}], "default_value": "3"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
     {"name": "cta", "display_name": "Call to action", "is_root": false, "is_nestable": true, "schema": {
       "heading": {"type": "text", "max_length": 90},
       "text": {"type": "textarea"},
@@ -240,6 +252,14 @@
       "file": {"type": "asset", "description": "The PDF. Empty sends people to the contact form"}
     }},
 
+    {"name": "article", "display_name": "Article", "is_root": true, "is_nestable": false, "schema": {
+      "title": {"type": "text", "required": true, "max_length": 100},
+      "date": {"type": "datetime", "disable_time": true, "required": true, "description": "Publication date; the news lists sort by this, newest first"},
+      "category": {"type": "text", "max_length": 30, "description": "Short label, e.g. Partnership, Product, Event"},
+      "image": {"type": "asset", "filetypes": ["images"], "description": "Wide photo for the article header and the news cards"},
+      "summary": {"type": "textarea", "max_length": 260, "description": "One or two sentences under the title, and for search results"},
+      "body": {"type": "richtext", "description": "The article. Use Heading 2 and 3 for sub-headings."}
+    }},
     {"name": "settings", "display_name": "Site settings", "is_root": true, "is_nestable": false, "schema": {
       "logo": {"type": "asset", "filetypes": ["images"], "description": "Top bar logo, on white"},
       "logo_on_dark": {"type": "asset", "filetypes": ["images"], "description": "Footer logo, on dark green"},
@@ -270,7 +290,7 @@
       "groups": {"type": "bloks", "restrict_components": true, "component_whitelist": ["menu_group"], "description": "Slide-out menu sections"},
       "panel_title": {"type": "text", "description": "Slide-out menu heading; empty uses the label"},
       "phone_label": {"type": "text", "description": "Label in the phone menu, if different"},
-      "highlight": {"type": "text", "description": "Light this button up on pages under this address, e.g. /products/"},
+      "highlight": {"type": "text", "description": "Light this button up on pages under this address, e.g. /products/. Separate several with commas."},
       "divider": {"type": "boolean", "description": "Line above this button"}
     }},
     {"name": "menu_group", "display_name": "Menu group", "is_root": false, "is_nestable": true, "schema": {

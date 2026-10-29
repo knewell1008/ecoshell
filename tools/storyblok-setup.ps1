@@ -135,7 +135,12 @@ function Folder($slug, $name) {
   $script:stories = @($script:stories) + $f
   $f
 }
-$folders = @{products = (Folder 'products' 'Products'); company = (Folder 'company' 'Company')}
+$folders = @{}
+function FolderFor($slug) {
+  if (-not $script:folders.ContainsKey($slug)) { $script:folders[$slug] = Folder $slug ((Get-Culture).TextInfo.ToTitleCase($slug)) }
+  $script:folders[$slug]
+}
+$folders.products = Folder 'products' 'Products'
 
 # ---------- product stories (copy and photo from site-src/content.js) ----------
 $products = [ordered]@{
@@ -213,15 +218,24 @@ foreach ($pg in (ReadJson 'tools\storyblok-pages.json')) {
 
   $story = @{name = $pg.name; content = $content}
   if ($pg.folder) {
-    $story.slug = 'overview'; $story.parent_id = $folders[$pg.folder].id; $story.is_startpage = $true
-  } elseif ($pg.slug -match '^(products|company)/(.+)$') {
-    $story.slug = $Matches[2]; $story.parent_id = $folders[$Matches[1]].id
+    $story.slug = 'overview'; $story.parent_id = (FolderFor $pg.folder).id; $story.is_startpage = $true
+  } elseif ($pg.slug -match '^([^/]+)/(.+)$') {
+    $story.slug = $Matches[2]; $story.parent_id = (FolderFor $Matches[1]).id
   } else {
     $story.slug = $pg.slug
   }
   if ($pg.slug -eq 'home') { $story.path = '/' }
   Call 'POST' '/stories' @{story = $story; publish = 1} | Out-Null
   Write-Host "Created and published $($pg.slug)"
+}
+
+# ---------- news articles (tools/storyblok-articles.json); "publish": false leaves one as a draft ----------
+foreach ($a in (ReadJson 'tools\storyblok-articles.json')) {
+  if ($stories | Where-Object { $_.full_slug -eq "news/$($a.slug)" }) { Write-Host "news/$($a.slug) already exists, leaving it"; continue }
+  $req = @{story = @{name = $a.name; slug = $a.slug; parent_id = (FolderFor 'news').id; content = (Prepare $a.content $null)}}
+  if ($a.publish) { $req.publish = 1 }
+  Call 'POST' '/stories' $req | Out-Null
+  Write-Host "Created news/$($a.slug)$(if ($a.publish) {' and published it'} else {' as a draft'})"
 }
 
 # ---------- Site settings (menu, footer, logo, design) from src/lib/site-defaults.json ----------

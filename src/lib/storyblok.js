@@ -1,6 +1,7 @@
 import {resolveSecret} from './supabase.js';
-import {renderBlocks, BLOCK_TYPES} from './blocks.js';
+import {renderBlocks, BLOCK_TYPES, needsArticles} from './blocks.js';
 import {renderProduct, productTitle} from './product.js';
+import {renderArticle, articleTitle} from './article.js';
 import {renderPage} from './frame.js';
 
 // Content pages come from Storyblok. For a path, the Worker looks up the story with that slug
@@ -43,10 +44,20 @@ async function fetchStory(fullSlug, token, draft) {
   return (await res.json()).story || null;
 }
 
+// Published Article stories in the news folder, newest first (for Latest news and article pages).
+async function fetchArticles(token, draft) {
+  const q = new URLSearchParams({token, version: draft ? 'draft' : 'published', starts_with: 'news/', content_type: 'article', sort_by: 'content.date:desc', per_page: '50'});
+  if (draft) q.set('cv', String(Date.now()));
+  const res = await fetch(API.replace(/\/$/, '') + '?' + q, draft ? {} : {cf: {cacheTtl: 60, cacheEverything: true}});
+  if (!res.ok) return [];
+  return (await res.json()).stories || [];
+}
+
 // A story we can render: a Page with at least one of our blocks (not e.g. Storyblok's sample), or a Product.
 function usable(story) {
   const c = story?.content;
   if (c?.component === 'page') return (c.body || []).some((b) => BLOCK_TYPES.includes(b.component));
+  if (c?.component === 'article') return true;
   return c?.component === 'product' && story.full_slug.startsWith('products/');
 }
 
@@ -57,14 +68,16 @@ function tagged(res, source, status) {
   return out;
 }
 
-function render(story, settings, path, draft) {
+function render(story, settings, path, draft, articles) {
   const c = story.content;
-  const isProduct = c.component === 'product';
+  const kind = c.component;
   const slug = story.full_slug;
-  const body = isProduct ? renderProduct(c, story.slug, {draft}) : renderBlocks(c.body, {draft});
-  const name = isProduct ? productTitle(c) : str(c.title) || story.name;
+  const body = kind === 'product' ? renderProduct(c, story.slug, {draft})
+    : kind === 'article' ? renderArticle(story, {draft, articles})
+    : renderBlocks(c.body, {draft, data: {articles}});
+  const name = kind === 'product' ? productTitle(c) : kind === 'article' ? articleTitle(c, story) : str(c.title) || story.name;
   const title = slug === 'home' ? `Ecoshell | ${name}` : `${name} | Ecoshell`;
-  const description = isProduct ? str(c.summary) : str(c.description) || `${name}: Ecoshell eggshell-derived materials for plastic reduction.`;
+  const description = kind === 'page' ? str(c.description) || `${name}: Ecoshell eggshell-derived materials for plastic reduction.` : str(c.summary);
   let html = renderPage({settings: settings?.content, path, title, description, body,
     editable: draft && settings?.content?._editable ? settings.content._editable : ''});
   if (draft) {
@@ -104,10 +117,13 @@ export async function sitePage(request, env, slug) {
   }
 
   try {
-    if (usable(story)) return HTML(render(story, settings, url.pathname, draft), 200, draft, draft ? 'storyblok draft' : 'storyblok');
+    if (usable(story)) {
+      const articles = story.content.component === 'article' || needsArticles(story.content.body) ? await fetchArticles(token, draft) : [];
+      return HTML(render(story, settings, url.pathname, draft, articles), 200, draft, draft ? 'storyblok draft' : 'storyblok');
+    }
     if (isStatic) return tagged(page, 'static; story not found');
     const missing = await fetchStory('not-found', token, draft);
-    if (usable(missing)) return HTML(render(missing, settings, url.pathname, draft), 404, draft, 'storyblok not-found');
+    if (usable(missing)) return HTML(render(missing, settings, url.pathname, draft, []), 404, draft, 'storyblok not-found');
   } catch (error) {
     if (isStatic) return tagged(page, `static; ${error.message}`.slice(0, 200));
   }

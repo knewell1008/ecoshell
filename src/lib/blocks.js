@@ -244,14 +244,78 @@ R.contact_form = (b) => {
     `<div style="margin-top:18px" id="cform">${f}</div></div>${side}</div>`);
 };
 
+// ---------- news ----------
+// Storyblok rich text (a "doc" tree) to HTML: paragraphs, headings, lists, quotes, links, bold/italic, images.
+export function richtext(doc) {
+  const marks = (text, ms) => list(ms).reduce((h, m) => {
+    if (m.type === 'bold') return `<strong>${h}</strong>`;
+    if (m.type === 'italic') return `<em>${h}</em>`;
+    if (m.type === 'underline') return `<u>${h}</u>`;
+    if (m.type === 'strike') return `<s>${h}</s>`;
+    if (m.type === 'code') return `<code>${h}</code>`;
+    if (m.type === 'link') {
+      const a = m.attrs || {};
+      const url = a.linktype === 'story' ? linkUrl({linktype: 'story', cached_url: a.href || a.story?.full_slug, story: a.story, anchor: a.anchor}) : linkUrl({linktype: a.linktype || 'url', url: a.href, email: a.href, anchor: a.anchor});
+      return `<a href="${attr(url)}"${a.target === '_blank' ? ' target="_blank" rel="noopener"' : ''}>${h}</a>`;
+    }
+    return h;
+  }, esc(text));
+  const node = (n) => {
+    const kids = () => list(n.content).map(node).join('');
+    switch (n.type) {
+      case 'doc': return kids();
+      case 'paragraph': return `<p>${kids()}</p>`;
+      case 'heading': return `<h${Math.min(Math.max(n.attrs?.level || 2, 2), 4)}>${kids()}</h${Math.min(Math.max(n.attrs?.level || 2, 2), 4)}>`;
+      case 'bullet_list': return `<ul>${kids()}</ul>`;
+      case 'ordered_list': return `<ol>${kids()}</ol>`;
+      case 'list_item': return `<li>${kids()}</li>`;
+      case 'blockquote': return `<blockquote>${kids()}</blockquote>`;
+      case 'horizontal_rule': return '<hr>';
+      case 'hard_break': return '<br>';
+      case 'image': return n.attrs?.src ? `<img src="${attr(assetUrl(n.attrs.src, 1200))}" alt="${attr(n.attrs.alt)}" loading="lazy">` : '';
+      case 'text': return marks(n.text, n.marks);
+      default: return kids();
+    }
+  };
+  return doc && typeof doc === 'object' ? node(doc) : paras(doc).map((p) => `<p>${fmt(p)}</p>`).join('');
+}
+
+export function formatDate(d) {
+  const t = Date.parse(String(d || '').replace(' ', 'T') + (String(d || '').length <= 16 ? 'Z' : ''));
+  return Number.isNaN(t) ? '' : new Date(t).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'});
+}
+// A card for an Article story (from the Storyblok stories list).
+export function articleCard(story) {
+  const c = story.content || {};
+  const img = c.image?.filename ? `<img src="${attr(assetUrl(c.image, 900))}" alt="${alt(c.image)}">` : '';
+  return `<a class="card card--img" href="/${attr(story.full_slug)}">${img}<div class="body">${str(c.category) ? `<span class="tag">${esc(c.category)}</span>` : ''}` +
+    `<h3>${esc(c.title || story.name)}</h3>${formatDate(c.date) ? `<p style="font-size:14px;color:var(--stone)">${formatDate(c.date)}</p>` : ''}<span class="arrow">Read more</span></div></a>`;
+}
+
+// Latest news: the newest published Article stories, filled in by the Worker (data.articles).
+// With no articles yet the section is left out of the page, except in the Visual Editor preview.
+R.news_list = (b, data = {}) => {
+  let items = list(data.articles).filter((s) => !str(b.category) || str(s.content?.category).toLowerCase() === str(b.category).toLowerCase());
+  if (data.exclude) items = items.filter((s) => s.full_slug !== data.exclude);
+  const count = Number(b.count) || 0;
+  if (count > 0) items = items.slice(0, count);
+  if (!items.length) {
+    return data.draft ? section(b, `<div class="wrap">${secHead(b)}<p style="color:var(--stone)">No published articles yet. Publish an Article in the News folder and it appears here.</p></div>`) : '';
+  }
+  return section(b, gridWrap(b, GRID[b.columns] || GRID[3], items.map(articleCard).join('')));
+};
+
 // Render a page's body. With draft on, each block is preceded by its Storyblok editable marker
-// so the Visual Editor can outline it and open it on click.
-export function renderBlocks(blocks, {draft = false} = {}) {
+// so the Visual Editor can outline it and open it on click. `data` carries what blocks fetched by
+// the Worker need, e.g. {articles} for Latest news.
+export function renderBlocks(blocks, {draft = false, data = {}} = {}) {
   return list(blocks).map((b) => {
     const render = R[b.component];
     if (!render) return '';
-    return (draft && b._editable ? b._editable : '') + render(b);
+    return (draft && b._editable ? b._editable : '') + render(b, {...data, draft});
   }).join('');
 }
+
+export const needsArticles = (blocks) => list(blocks).some((b) => b.component === 'news_list');
 
 export const BLOCK_TYPES = Object.keys(R);

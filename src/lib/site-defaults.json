@@ -39,9 +39,9 @@
       {"component": "menu_group", "heading": "Meet your targets", "links": [
         {"component": "menu_link", "label": "How to use Ecoshell", "link": "/sustainability#targets"},
         {"component": "menu_link", "label": "EPR example solutions", "link": "/sustainability#epr"}]}]},
-    {"component": "rail_item", "label": "Insights & Resources", "icon": "resources", "highlight": "/resources", "groups": [
+    {"component": "rail_item", "label": "Insights & Resources", "icon": "resources", "highlight": "/resources, /news/", "groups": [
       {"component": "menu_group", "heading": "Insights", "links": [
-        {"component": "menu_link", "label": "Articles and news", "link": "/company/#news"}]},
+        {"component": "menu_link", "label": "Articles and news", "link": "/news/"}]},
       {"component": "menu_group", "heading": "Downloads", "links": [
         {"component": "menu_link", "label": "Tech downloads", "link": "/resources"},
         {"component": "menu_link", "label": "Position papers", "link": "/resources"},
@@ -52,7 +52,7 @@
       {"component": "menu_group", "heading": "About", "links": [
         {"component": "menu_link", "label": "About Ecoshell", "link": "/company/"},
         {"component": "menu_link", "label": "Capabilities", "link": "/company/#capabilities"},
-        {"component": "menu_link", "label": "News", "link": "/company/#news"}]},
+        {"component": "menu_link", "label": "News", "link": "/news/"}]},
       {"component": "menu_group", "heading": "People", "links": [
         {"component": "menu_link", "label": "Team", "link": "/company/team"},
         {"component": "menu_link", "label": "Job opportunities", "link": "/company/careers"}]},
