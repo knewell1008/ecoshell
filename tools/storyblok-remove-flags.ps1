@@ -48,8 +48,8 @@ foreach ($s in $list) {
   if ($story.full_slug -eq 'home') {
     foreach ($b in @($c.body | Where-Object { $_.component -eq 'home_hero' })) {
       foreach ($slide in @($b.slides)) {
-        if (@($slide.readout).Count -gt 0) {
-          $slide.readout = @()
+        if ($slide.readout) {
+          $slide | Add-Member -NotePropertyName readout -NotePropertyValue @() -Force
           $slide | Add-Member -NotePropertyName readout_title -NotePropertyValue '' -Force
           Write-Host 'home: removed the data panel from the slideshow'
         }
@@ -58,8 +58,8 @@ foreach ($s in $list) {
   }
   if ($story.full_slug -eq 'contact') {
     foreach ($b in @($c.body | Where-Object { $_.component -eq 'contact_form' })) {
-      if (@($b.contacts).Count -gt 0) {
-        $b.contacts = @()
+      if ($b.contacts) {
+        $b | Add-Member -NotePropertyName contacts -NotePropertyValue @() -Force
         Write-Host 'contact: removed the Direct contacts list'
       }
     }
