@@ -3,6 +3,7 @@ import {renderBlocks, BLOCK_TYPES, needsArticles} from './blocks.js';
 import {renderProduct, productTitle} from './product.js';
 import {renderArticle, articleTitle} from './article.js';
 import {renderPage} from './frame.js';
+import DEFAULTS from './site-defaults.json';
 
 // Content pages come from Storyblok. For a path, the Worker looks up the story with that slug
 // ("/" is "home", "/products/" is the products folder's start page) and the Site settings story
@@ -114,6 +115,14 @@ export async function sitePage(request, env, slug) {
     }
   } catch (error) {
     return isStatic ? tagged(page, `static; ${error.message}`.slice(0, 200)) : page;
+  }
+
+  // Redirects from Site settings, for pages that moved. A page that exists at the address wins.
+  if (!usable(story)) {
+    const norm = (p) => '/' + str(p).replace(/^https?:\/\/[^/]+/, '').replace(/^\/+/, '').replace(/\.html$/, '').replace(/\/+$/, '');
+    const redirects = settings?.content?.redirects?.length ? settings.content.redirects : DEFAULTS.redirects || [];
+    const hit = redirects.find((r) => str(r.from) && norm(r.from) === norm(url.pathname));
+    if (hit && str(hit.to)) return Response.redirect(new URL(str(hit.to) + (str(hit.to).includes('?') ? '' : url.search), url).href, 301);
   }
 
   try {

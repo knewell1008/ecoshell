@@ -281,7 +281,12 @@
       "color_line": {"type": "text", "regex": "^#[0-9a-fA-F]{6}$", "description": "Lines and borders"},
       "spacing": {"type": "option", "options": [{"name": "Compact", "value": "compact"}, {"name": "Standard", "value": "standard"}, {"name": "Roomy", "value": "roomy"}], "default_value": "standard", "description": "Space above and below each section"},
       "heading_font": {"type": "asset", "description": "Optional font file (WOFF2) to replace Jost in headings and buttons. Empty keeps Jost."},
-      "body_font": {"type": "asset", "description": "Optional font file (WOFF2) to replace Source Sans 3 in body text. Empty keeps Source Sans 3."}
+      "body_font": {"type": "asset", "description": "Optional font file (WOFF2) to replace Source Sans 3 in body text. Empty keeps Source Sans 3."},
+      "redirects": {"type": "bloks", "restrict_components": true, "component_whitelist": ["redirect"], "description": "Old addresses that send visitors to a new one. Add one whenever you move or rename a page (moving a story into a folder changes its address)."}
+    }},
+    {"name": "redirect", "display_name": "Redirect", "is_root": false, "is_nestable": true, "schema": {
+      "from": {"type": "text", "required": true, "description": "Old address, e.g. /resources"},
+      "to": {"type": "text", "required": true, "description": "New address, e.g. /insights-resources/resources"}
     }},
     {"name": "rail_item", "display_name": "Menu button", "is_root": false, "is_nestable": true, "schema": {
       "label": {"type": "text", "required": true, "max_length": 30},

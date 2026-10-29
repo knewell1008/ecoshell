@@ -39,15 +39,15 @@
       {"component": "menu_group", "heading": "Meet your targets", "links": [
         {"component": "menu_link", "label": "How to use Ecoshell", "link": "/sustainability#targets"},
         {"component": "menu_link", "label": "EPR example solutions", "link": "/sustainability#epr"}]}]},
-    {"component": "rail_item", "label": "Insights & Resources", "icon": "resources", "highlight": "/resources, /news/", "groups": [
+    {"component": "rail_item", "label": "Insights & Resources", "icon": "resources", "highlight": "/insights-resources/, /news/", "groups": [
       {"component": "menu_group", "heading": "Insights", "links": [
         {"component": "menu_link", "label": "Articles and news", "link": "/news/"}]},
       {"component": "menu_group", "heading": "Downloads", "links": [
-        {"component": "menu_link", "label": "Tech downloads", "link": "/resources"},
-        {"component": "menu_link", "label": "Position papers", "link": "/resources"},
-        {"component": "menu_link", "label": "Product lists", "link": "/resources"}]},
+        {"component": "menu_link", "label": "Tech downloads", "link": "/insights-resources/resources"},
+        {"component": "menu_link", "label": "Position papers", "link": "/insights-resources/resources"},
+        {"component": "menu_link", "label": "Product lists", "link": "/insights-resources/resources"}]},
       {"component": "menu_group", "heading": "For your team", "links": [
-        {"component": "menu_link", "label": "Custom marketing one-pagers", "link": "/resources#onepager"}]}]},
+        {"component": "menu_link", "label": "Custom marketing one-pagers", "link": "/insights-resources/resources#onepager"}]}]},
     {"component": "rail_item", "label": "Company", "icon": "company", "highlight": "/company/", "groups": [
       {"component": "menu_group", "heading": "About", "links": [
         {"component": "menu_link", "label": "About Ecoshell", "link": "/company/"},
@@ -85,12 +85,15 @@
       {"component": "menu_link", "label": "Sales", "link": "/contact?type=Sales"},
       {"component": "menu_link", "label": "Co-development", "link": "/contact?type=Co-development"},
       {"component": "menu_link", "label": "Press", "link": "/contact?type=Press"},
-      {"component": "menu_link", "label": "Resources", "link": "/resources"}]}
+      {"component": "menu_link", "label": "Resources", "link": "/insights-resources/resources"}]}
   ],
   "copyright": "Ecoshell LLC",
   "legal_links": [
     {"component": "menu_link", "label": "Privacy"},
     {"component": "menu_link", "label": "Terms of use"}
+  ],
+  "redirects": [
+    {"component": "redirect", "from": "/resources", "to": "/insights-resources/resources"}
   ],
   "color_deep": "#1A3629",
   "color_ink": "#10201A",
