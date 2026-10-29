@@ -237,8 +237,10 @@ R.contact_form = (b) => {
     (selects ? `<div class="row">${selects}</div>` : '') +
     `<label>Message<textarea name="message" required placeholder="Tell us the polymer, process and application"></textarea></label><div><button class="btn btn--primary" type="submit">${fmt(b.button_label || 'Send')}</button></div><p class="status" role="status" aria-live="polite" hidden></p></form>`;
   const contacts = list(b.contacts).filter((c) => str(c.term)).map((c) => `<div><dt>${fmt(c.term)}</dt><dd>${fmt(c.text)}</dd></div>`).join('');
-  return section(b, `<div class="wrap gate"><div><div class="seg" id="ctype" role="group" aria-label="Inquiry type">${types.map((t) => `<button type="button" aria-pressed="false" data-type="${attr(t)}">${esc(t)}</button>`).join('')}</div>` +
-    `<div style="margin-top:18px" id="cform">${f}</div></div><div class="side"><span class="eyebrow">${fmt(b.contacts_eyebrow || 'Direct contacts')}</span><dl class="list">${contacts}</dl></div></div>`);
+  // Without direct contacts the form gets the row to itself, at a readable width.
+  const side = contacts ? `<div class="side"><span class="eyebrow">${fmt(b.contacts_eyebrow || 'Direct contacts')}</span><dl class="list">${contacts}</dl></div>` : '';
+  return section(b, `<div class="wrap gate"${side ? '' : ' style="grid-template-columns:minmax(0,760px)"'}><div><div class="seg" id="ctype" role="group" aria-label="Inquiry type">${types.map((t) => `<button type="button" aria-pressed="false" data-type="${attr(t)}">${esc(t)}</button>`).join('')}</div>` +
+    `<div style="margin-top:18px" id="cform">${f}</div></div>${side}</div>`);
 };
 
 // Render a page's body. With draft on, each block is preceded by its Storyblok editable marker
