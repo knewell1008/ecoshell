@@ -163,18 +163,22 @@ function Prepare($v, $key) {
 
 # ---------- folders ----------
 $stories = (Call 'GET' '/stories?per_page=100' $null).stories
-function Folder($slug, $name) {
-  $f = $script:stories | Where-Object { $_.is_folder -and $_.slug -eq $slug }
+# A folder by its full path, e.g. "company/careers"; missing parents are created first.
+function Folder($path, $name) {
+  $f = $script:stories | Where-Object { $_.is_folder -and $_.full_slug.TrimEnd('/') -eq $path }
   if ($f) { return $f }
-  $f = (Call 'POST' '/stories' @{story = @{name = $name; slug = $slug; is_folder = $true}}).story
-  Write-Host "Created folder $name"
+  $parts = $path.Split('/')
+  $req = @{name = $name; slug = $parts[-1]; is_folder = $true}
+  if ($parts.Count -gt 1) { $req.parent_id = (FolderFor ($parts[0..($parts.Count - 2)] -join '/')).id }
+  $f = (Call 'POST' '/stories' @{story = $req}).story
+  Write-Host "Created folder $path"
   $script:stories = @($script:stories) + $f
   $f
 }
 $folders = @{}
-function FolderFor($slug) {
-  if (-not $script:folders.ContainsKey($slug)) { $script:folders[$slug] = Folder $slug ((Get-Culture).TextInfo.ToTitleCase($slug)) }
-  $script:folders[$slug]
+function FolderFor($path) {
+  if (-not $script:folders.ContainsKey($path)) { $script:folders[$path] = Folder $path ((Get-Culture).TextInfo.ToTitleCase($path.Split('/')[-1])) }
+  $script:folders[$path]
 }
 $folders.products = Folder 'products' 'Products'
 
@@ -255,7 +259,7 @@ foreach ($pg in (ReadJson 'tools\storyblok-pages.json')) {
   $story = @{name = $pg.name; content = $content}
   if ($pg.folder) {
     $story.slug = 'overview'; $story.parent_id = (FolderFor $pg.folder).id; $story.is_startpage = $true
-  } elseif ($pg.slug -match '^([^/]+)/(.+)$') {
+  } elseif ($pg.slug -match '^(.+)/([^/]+)$') {
     $story.slug = $Matches[2]; $story.parent_id = (FolderFor $Matches[1]).id
   } else {
     $story.slug = $pg.slug
@@ -276,7 +280,7 @@ foreach ($a in (ReadJson 'tools\storyblok-articles.json')) {
 
 # ---------- folder default content types (tools/storyblok-blocks.json "folders") ----------
 foreach ($f in $defs.folders.PSObject.Properties) {
-  $folder = $stories | Where-Object { $_.is_folder -and $_.slug -eq $f.Name }
+  $folder = $stories | Where-Object { $_.is_folder -and $_.full_slug.TrimEnd('/') -eq $f.Name }
   if (-not $folder) { continue }
   $story = (Call 'GET' "/stories/$($folder.id)" $null).story
   if ($story.default_root -eq $f.Value) { continue }

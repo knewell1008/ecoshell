@@ -1,14 +1,16 @@
 import {resolveSecret} from './supabase.js';
-import {renderBlocks, BLOCK_TYPES, needsArticles} from './blocks.js';
+import {renderBlocks, BLOCK_TYPES, needsArticles, needsJobs} from './blocks.js';
 import {renderProduct, productTitle} from './product.js';
 import {renderArticle, articleTitle} from './article.js';
+import {renderJob, jobTitle} from './job.js';
 import {renderPage} from './frame.js';
 import DEFAULTS from './site-defaults.json';
 
 // Content pages come from Storyblok. For a path, the Worker looks up the story with that slug
 // ("/" is "home", "/products/" is the products folder's start page) and the Site settings story
 // ("settings"), and renders the whole page: frame.js for the menu, footer and design, blocks.js for a
-// Page story's sections, product.js for a Product story. So editors can add pages at new addresses.
+// Page story's sections, product.js / article.js / job.js for Product, Article and Job stories. So
+// editors can add pages at new addresses.
 // The static HTML files stay the fallback: they are served when there is no story for the path, when
 // STORYBLOK_TOKEN is missing or Storyblok is unreachable. Unknown paths get the "not-found" Page story.
 const API = 'https://api.storyblok.com/v2/cdn/stories/';
@@ -54,13 +56,23 @@ async function fetchArticles(token, draft) {
   return ((await res.json()).stories || []).filter((s) => !isTemplate(s));
 }
 
+// Published Job stories in company/careers, by department then title (for Open roles).
+async function fetchJobs(token, draft) {
+  const q = new URLSearchParams({token, version: draft ? 'draft' : 'published', starts_with: 'company/careers/', content_type: 'job', per_page: '100'});
+  if (draft) q.set('cv', String(Date.now()));
+  const res = await fetch(API.replace(/\/$/, '') + '?' + q, draft ? {} : {cf: {cacheTtl: 60, cacheEverything: true}});
+  if (!res.ok) return [];
+  const key = (s) => `${str(s.content?.department)}\u0000${str(s.content?.title) || s.name}`.toLowerCase();
+  return ((await res.json()).stories || []).filter((s) => !isTemplate(s)).sort((a, b) => key(a).localeCompare(key(b)));
+}
+
 const isTemplate = (story) => /(^|\/)template-/.test(story?.full_slug || '');
 
 // A story we can render: a Page with at least one of our blocks (not e.g. Storyblok's sample), or a Product.
 function usable(story) {
   const c = story?.content;
   if (c?.component === 'page') return (c.body || []).some((b) => BLOCK_TYPES.includes(b.component));
-  if (c?.component === 'article') return true;
+  if (c?.component === 'article' || c?.component === 'job') return true;
   return c?.component === 'product' && story.full_slug.startsWith('products/');
 }
 
@@ -71,14 +83,15 @@ function tagged(res, source, status) {
   return out;
 }
 
-function render(story, settings, path, draft, articles) {
+function render(story, settings, path, draft, {articles = [], jobs = []} = {}) {
   const c = story.content;
   const kind = c.component;
   const slug = story.full_slug;
   const body = kind === 'product' ? renderProduct(c, story.slug, {draft})
     : kind === 'article' ? renderArticle(story, {draft, articles})
-    : renderBlocks(c.body, {draft, data: {articles}});
-  const name = kind === 'product' ? productTitle(c) : kind === 'article' ? articleTitle(c, story) : str(c.title) || story.name;
+    : kind === 'job' ? renderJob(story, {draft})
+    : renderBlocks(c.body, {draft, data: {articles, jobs}});
+  const name = kind === 'product' ? productTitle(c) : kind === 'article' ? articleTitle(c, story) : kind === 'job' ? jobTitle(c, story) : str(c.title) || story.name;
   const title = slug === 'home' ? `Ecoshell | ${name}` : `${name} | Ecoshell`;
   const description = kind === 'page' ? str(c.description) || `${name}: Ecoshell eggshell-derived materials for plastic reduction.` : str(c.summary);
   // Site settings are for admins: the preview carries no marker for them, so editors can only open page sections.
@@ -118,10 +131,10 @@ export async function sitePage(request, env, slug) {
   try {
     draft = await isPreview(url, token);
     [story, settings] = await Promise.all([fetchStory(slug, token, draft), fetchStory('settings', token, draft).catch(() => null)]);
-    if (!usable(story) && !isStatic && !slug.endsWith('/')) {
-      // "/news" for a folder whose start page exists: send people to "/news/".
+    if (!usable(story) && !slug.endsWith('/')) {
+      // "/company/careers" when Careers is a folder (its jobs live inside): serve the folder's start page.
       const start = await fetchStory(slug + '/', token, draft);
-      if (usable(start)) return Response.redirect(new URL(url.pathname + '/' + url.search, url).href, 308);
+      if (usable(start)) story = start;
     }
   } catch (error) {
     return isStatic ? tagged(page, `static; ${error.message}`.slice(0, 200)) : page;
@@ -139,12 +152,16 @@ export async function sitePage(request, env, slug) {
 
   try {
     if (usable(story)) {
-      const articles = story.content.component === 'article' || needsArticles(story.content.body) ? await fetchArticles(token, draft) : [];
-      return HTML(render(story, settings, url.pathname, draft, articles), 200, draft, draft ? 'storyblok draft' : 'storyblok');
+      const c = story.content;
+      const [articles, jobs] = await Promise.all([
+        c.component === 'article' || needsArticles(c.body) ? fetchArticles(token, draft) : [],
+        needsJobs(c.body) ? fetchJobs(token, draft) : []
+      ]);
+      return HTML(render(story, settings, url.pathname, draft, {articles, jobs}), 200, draft, draft ? 'storyblok draft' : 'storyblok');
     }
     if (isStatic) return tagged(page, 'static; story not found');
     const missing = await fetchStory('not-found', token, draft);
-    if (usable(missing)) return HTML(render(missing, settings, url.pathname, draft, []), 404, draft, 'storyblok not-found');
+    if (usable(missing)) return HTML(render(missing, settings, url.pathname, draft), 404, draft, 'storyblok not-found');
   } catch (error) {
     if (isStatic) return tagged(page, `static; ${error.message}`.slice(0, 200));
   }

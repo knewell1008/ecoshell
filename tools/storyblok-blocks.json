@@ -1,9 +1,9 @@
 {
   "_note": "Storyblok block definitions, loaded by tools/storyblok-setup.ps1 (field order sets the order editors see). Rendering: src/lib/blocks.js (Page blocks) and src/lib/storyblok.js (Product).",
-  "sections": ["hero", "home_hero", "text_split", "image_split", "cards", "steps", "chips", "table", "stats", "badges", "industries", "logos", "definition_list", "people", "downloads", "news_list", "cta", "inquiry_form", "contact_form"],
+  "sections": ["hero", "home_hero", "text_split", "image_split", "cards", "steps", "chips", "table", "stats", "badges", "industries", "logos", "definition_list", "people", "downloads", "news_list", "job_list", "cta", "inquiry_form", "contact_form"],
   "_editor_note": "groups: block library folders. preview: the field shown as an item's name in lists. tabs: fields moved off the main tab, so editors see words and pictures first.",
   "groups": {
-    "Content types": ["page", "article", "product", "settings"],
+    "Content types": ["page", "article", "job", "product", "settings"],
     "Page sections": "@sections",
     "Section items": ["crumb", "button", "slide", "benefit_column", "list_item", "card", "step", "chip_group", "table_row", "stat", "badge", "person", "select_field", "download_group", "download", "application", "property"],
     "Menu and footer": ["rail_item", "menu_group", "menu_link", "footer_column", "redirect"]
@@ -11,7 +11,7 @@
   "preview": {
     "hero": "title", "home_hero": "", "text_split": "heading", "image_split": "heading", "cards": "heading", "steps": "heading", "table": "heading",
     "stats": "heading", "badges": "heading", "industries": "heading", "logos": "heading", "definition_list": "heading", "people": "heading",
-    "downloads": "heading", "news_list": "heading", "cta": "heading", "inquiry_form": "form_title",
+    "downloads": "heading", "news_list": "heading", "job_list": "heading", "cta": "heading", "inquiry_form": "form_title",
     "crumb": "label", "button": "label", "slide": "heading", "benefit_column": "heading", "list_item": "term", "card": "title", "step": "title",
     "chip_group": "heading", "table_row": "label", "stat": "value", "badge": "title", "person": "name", "select_field": "label",
     "download_group": "eyebrow", "download": "title", "application": "title", "property": "label",
@@ -34,6 +34,8 @@
     "people": {"Layout": ["background", "anchor"]},
     "downloads": {"Layout": ["background", "anchor"]},
     "news_list": {"Layout": ["columns", "category", "background", "anchor"]},
+    "job_list": {"Layout": ["background", "anchor"]},
+    "job": {"How to apply": ["apply_email", "apply_link", "apply_text", "closing_date"]},
     "cta": {"Layout": ["anchor"]},
     "inquiry_form": {"Intro column": ["eyebrow", "heading", "text", "items", "form_note"], "Layout": ["background", "anchor"]},
     "contact_form": {"Layout": ["background", "anchor"]},
@@ -44,7 +46,7 @@
       "Design": ["color_deep", "color_ink", "color_green", "color_green_lift", "color_lime", "color_eggshell", "color_mist", "color_stone", "color_line", "spacing", "heading_font", "body_font"],
       "Redirects": ["redirects"]}
   },
-  "folders": {"products": "product", "news": "article", "company": "page", "insights-resources": "page"},
+  "folders": {"products": "product", "news": "article", "company": "page", "company/careers": "job", "insights-resources": "page"},
   "remove": ["teaser", "grid", "feature"],
   "components": [
     {"name": "page", "display_name": "Page", "is_root": true, "is_nestable": false, "schema": {
@@ -198,6 +200,15 @@
       "background": "@background",
       "anchor": "@anchor"
     }},
+    {"name": "job_list", "display_name": "Open roles", "is_root": false, "is_nestable": true, "schema": {
+      "eyebrow": {"type": "text", "max_length": 60},
+      "heading": {"type": "text", "max_length": 90},
+      "intro": {"type": "textarea"},
+      "empty_text": {"type": "text", "default_value": "There are no open roles right now.", "description": "Shown when no jobs are published"},
+      "footer": {"type": "textarea", "description": "Line under the list, e.g. where to send a CV"},
+      "background": "@background",
+      "anchor": "@anchor"
+    }},
     {"name": "cta", "display_name": "Call to action", "is_root": false, "is_nestable": true, "schema": {
       "heading": {"type": "text", "max_length": 90},
       "text": {"type": "textarea"},
@@ -304,6 +315,19 @@
       "image": {"type": "asset", "filetypes": ["images"], "description": "Wide photo for the article header and the news cards"},
       "summary": {"type": "textarea", "max_length": 260, "description": "One or two sentences under the title, and for search results"},
       "body": {"type": "richtext", "description": "The article. Use Heading 2 and 3 for sub-headings."}
+    }},
+    {"name": "job", "display_name": "Job", "is_root": true, "is_nestable": false, "schema": {
+      "title": {"type": "text", "required": true, "max_length": 80, "description": "Role title, e.g. Sales Manager"},
+      "department": {"type": "text", "max_length": 30, "description": "e.g. Commercial, Operations, Technical. The list groups roles by this."},
+      "location": {"type": "text", "max_length": 60, "description": "e.g. Remote (US) or Columbus, Ohio"},
+      "employment_type": {"type": "option", "options": [{"name": "Full-time", "value": "Full-time"}, {"name": "Part-time", "value": "Part-time"}, {"name": "Contract", "value": "Contract"}, {"name": "Internship", "value": "Internship"}], "default_value": "Full-time", "display_name": "Type"},
+      "summary": {"type": "textarea", "max_length": 260, "description": "One or two sentences under the title, and for search results"},
+      "body": {"type": "richtext", "description": "The role: what you'll do, what we're looking for, what we offer. Use Heading 2 for each part."},
+      "image": {"type": "asset", "filetypes": ["images"], "description": "Optional header photo. Empty uses the standard careers photo."},
+      "apply_email": {"type": "text", "description": "Applications go to this address, with the role in the subject. Empty uses careers@ecoshell.eco."},
+      "apply_link": {"type": "multilink", "description": "Or a job-board page to apply on; it replaces the email"},
+      "apply_text": {"type": "textarea", "description": "Short note in the How to apply box"},
+      "closing_date": {"type": "datetime", "disable_time": true, "description": "Optional: shown as Apply by"}
     }},
     {"name": "settings", "display_name": "Site settings", "is_root": true, "is_nestable": false, "schema": {
       "logo": {"type": "asset", "filetypes": ["images"], "description": "Top bar logo, on white"},

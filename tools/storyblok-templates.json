@@ -19,6 +19,20 @@
        {"type": "paragraph", "content": [{"type": "text", "text": "[Opening paragraph: who, what, when.]"}]},
        {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "[Sub-heading]"}]},
        {"type": "paragraph", "content": [{"type": "text", "text": "[More detail.]"}]}]}}},
+  {"folder": "company/careers", "slug": "template-job", "name": "TEMPLATE - Job",
+   "content": {"component": "job", "title": "[Role title]", "department": "[Department, e.g. Commercial]", "location": "[Location]", "employment_type": "Full-time",
+     "summary": "[One or two sentences on the role and why it matters.]", "apply_email": "", "apply_text": "",
+     "body": {"type": "doc", "content": [
+       {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "What you'll do"}]},
+       {"type": "bullet_list", "content": [
+         {"type": "list_item", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "[Responsibility]"}]}]},
+         {"type": "list_item", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "[Responsibility]"}]}]}]},
+       {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "What we're looking for"}]},
+       {"type": "bullet_list", "content": [
+         {"type": "list_item", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "[Requirement]"}]}]},
+         {"type": "list_item", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "[Requirement]"}]}]}]},
+       {"type": "heading", "attrs": {"level": 2}, "content": [{"type": "text", "text": "What we offer"}]},
+       {"type": "paragraph", "content": [{"type": "text", "text": "[Salary range, benefits, how the team works.]"}]}]}}},
   {"folder": "products", "slug": "template-product", "name": "TEMPLATE - Product",
    "content": {"component": "product", "name": "[Ecoshell Name]", "platform": "core", "summary": "[One or two sentences shown under the product name.]",
      "description": "[Opening paragraph of the Description section.]", "details": "", "hero_image": {"_file": "assets/img/site/pellets.jpg"},

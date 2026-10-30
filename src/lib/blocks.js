@@ -305,6 +305,24 @@ R.news_list = (b, data = {}) => {
   return section(b, gridWrap(b, GRID[b.columns] || GRID[3], items.map(articleCard).join('')));
 };
 
+// ---------- careers ----------
+export const jobPath = (story) => '/' + str(story.full_slug).replace(/\/$/, '');
+export const jobMeta = (c) => [c.department, c.location, c.employment_type].map(str).filter(Boolean);
+
+// Open roles: the published Job stories, filled in by the Worker (data.jobs), one row per role.
+// With none published, shows the "no open roles" line, so the CV line under it still makes sense.
+R.job_list = (b, data = {}) => {
+  const jobs = list(data.jobs);
+  const rows = jobs.map((s) => {
+    const c = s.content || {};
+    const line = [str(c.title) || s.name, str(c.location), str(c.employment_type)].filter(Boolean).map(esc).join(' · ');
+    return `<div><dt>${esc(c.department || 'Role')}</dt><dd style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>${line}</span><a class="arrow" href="${attr(jobPath(s))}">View role</a></dd></div>`;
+  }).join('');
+  const empty = `<p style="color:var(--muted)">${fmt(b.empty_text || 'There are no open roles right now.')}</p>`;
+  return section(b, `<div class="wrap">${secHead(b)}${rows ? `<dl class="list">${rows}</dl>` : empty}${str(b.footer) ? `<p style="margin-top:24px;color:var(--muted)">${fmt(b.footer)}</p>` : ''}</div>`);
+};
+export const needsJobs = (blocks) => list(blocks).some((b) => b.component === 'job_list');
+
 // Render a page's body. With draft on, each block is preceded by its Storyblok editable marker
 // so the Visual Editor can outline it and open it on click. `data` carries what blocks fetched by
 // the Worker need, e.g. {articles} for Latest news.
