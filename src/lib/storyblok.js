@@ -85,7 +85,15 @@ function render(story, settings, path, draft, articles) {
     editable: draft && settings?.content?._editable ? settings.content._editable : ''});
   if (draft) {
     // Visual Editor preview: load the bridge and reload the preview each time the editor saves.
-    html = html.replace('</body>', `<script src="${BRIDGE}"></script><script>new window.StoryblokBridge().on(['change','published'],function(){location.reload()})</script>\n</body>`);
+    // Links followed inside the preview keep the signed _storyblok parameters, so the next page is a
+    // draft preview too (its sections can be clicked to open that story), and the address names the
+    // story now shown.
+    html = html.replace('</body>', `<script src="${BRIDGE}"></script><script>new window.StoryblokBridge().on(['change','published'],function(){location.reload()});
+(function(){var q=new URLSearchParams(location.search),id=${JSON.stringify(String(story.id || ''))};
+if(id&&q.get('_storyblok')!==id){q.set('_storyblok',id);history.replaceState(null,'',location.pathname+'?'+q+location.hash)}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);
+if(u.origin!==location.origin||/^\\/(portal|admin|api|assets)/.test(u.pathname)||(u.pathname===location.pathname&&u.hash))return;
+new URLSearchParams(location.search).forEach(function(v,k){if(k.indexOf('_storyblok')===0)u.searchParams.set(k,v)});a.href=u.href},true)})();</script>\n</body>`);
   }
   return html;
 }
