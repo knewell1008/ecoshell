@@ -138,7 +138,8 @@ function favicons(s) {
     `<link rel="apple-touch-icon" sizes="180x180" href="${esc(f)}/m/180x180">\n`;
 }
 
-// The whole page. `editable` marks the settings story for the Visual Editor when it is being previewed.
+// The whole page. `editable` is the settings story's Visual Editor marker: it goes on the tagline only,
+// so clicking the menu, logo or footer in the preview follows the link instead of opening Site settings.
 export function renderPage({settings, path, title, description, body, editable = ''}) {
   const s = settings || {};
   const r = rail(s, path);
@@ -154,8 +155,8 @@ ${design(s)}${favicons(s)}<link rel="manifest" href="/assets/img/favicon/site.we
 </head>
 <body class="es">
 ${DEFS}
-${editable}<div class="site"><a class="skip" href="#content">Skip to content</a>
-<header class="topbar"><div class="wrap"><button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10201A" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="/" aria-label="Ecoshell home" style="text-decoration:none">${mark(s)}</a><span class="topbar__tag">${esc(pick(s, 'tagline'))}</span></div></header>
+<div class="site"><a class="skip" href="#content">Skip to content</a>
+<header class="topbar"><div class="wrap"><button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10201A" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="/" aria-label="Ecoshell home" style="text-decoration:none">${mark(s)}</a>${editable}<span class="topbar__tag">${esc(pick(s, 'tagline'))}</span></div></header>
 <div class="mobile-menu" id="mmenu" hidden><div class="wrap">${r.phone}</div></div>
 <div class="shell">
 ${r.aside}
