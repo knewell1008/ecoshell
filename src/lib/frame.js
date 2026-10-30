@@ -138,8 +138,8 @@ function favicons(s) {
     `<link rel="apple-touch-icon" sizes="180x180" href="${esc(f)}/m/180x180">\n`;
 }
 
-// The whole page. `editable` is the settings story's Visual Editor marker: it goes on the tagline only,
-// so clicking the menu, logo or footer in the preview follows the link instead of opening Site settings.
+// The whole page. `editable` is an optional Visual Editor marker for the settings story, placed on the
+// tagline; the Worker passes none, as Site settings are edited by admins from the Content list.
 export function renderPage({settings, path, title, description, body, editable = ''}) {
   const s = settings || {};
   const r = rail(s, path);

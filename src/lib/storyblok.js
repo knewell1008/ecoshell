@@ -81,8 +81,8 @@ function render(story, settings, path, draft, articles) {
   const name = kind === 'product' ? productTitle(c) : kind === 'article' ? articleTitle(c, story) : str(c.title) || story.name;
   const title = slug === 'home' ? `Ecoshell | ${name}` : `${name} | Ecoshell`;
   const description = kind === 'page' ? str(c.description) || `${name}: Ecoshell eggshell-derived materials for plastic reduction.` : str(c.summary);
-  let html = renderPage({settings: settings?.content, path, title, description, body,
-    editable: draft && settings?.content?._editable ? settings.content._editable : ''});
+  // Site settings are for admins: the preview carries no marker for them, so editors can only open page sections.
+  let html = renderPage({settings: settings?.content, path, title, description, body});
   if (draft) {
     // Visual Editor preview: load the bridge and reload the preview each time the editor saves.
     // Links followed inside the preview keep the signed _storyblok parameters, so the next page is a
